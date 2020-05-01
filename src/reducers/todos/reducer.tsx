@@ -1,33 +1,40 @@
 import {
   ActionTypes,
-  ErrorTodos,
+  AddedTodo,
   FetchedTodos,
   LoadingTodos,
-  TodoState
-} from "./types";
+  TodoState,
+  AddingTodo,
+} from './types';
 
 const initialState: TodoState = {
   todos: [],
-  loading: false
+  loading: false,
+  adding: false,
 };
 
 const todoReducer = () => {
   return (
     state = initialState,
-    action: FetchedTodos | ErrorTodos | LoadingTodos
+    action: FetchedTodos | LoadingTodos | AddingTodo | AddedTodo
   ) => {
     switch (action.type) {
       case ActionTypes.LOADING_TODOS:
         return { ...state, loading: action.loading };
+      case ActionTypes.ADDING_TODO:
+        return {
+          ...state,
+          adding: action.adding,
+          todos: [...state.todos, action.todo],
+        };
+      case ActionTypes.ADDED_TODO:
+        return { ...state, adding: action.adding };
       case ActionTypes.FETCHED_TODOS:
-        console.log("ajisfjoa");
         return {
           ...state,
           todos: action.todos,
-          loading: action.loading
+          loading: action.loading,
         };
-      case ActionTypes.ERROR_TODOS:
-        return { ...state, error: action.error, loading: action.loading };
       default:
         return state;
     }

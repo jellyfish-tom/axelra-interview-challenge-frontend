@@ -1,11 +1,11 @@
 export const getDomain = () => {
   if (isProduction()) {
     // TODO: insert prod url
-    return "";
+    return '';
   }
-  return "http://localhost:3001";
+  return 'http://localhost:27017';
 };
 
 const isProduction = () => {
-  return process.env.NODE_ENV === "production";
+  return process.env.NODE_ENV === 'production';
 };

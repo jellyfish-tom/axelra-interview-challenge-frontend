@@ -1,14 +1,27 @@
-import { Todo } from "../../model/Todo";
+import { Todo } from '../../model/Todo';
 
 export enum ActionTypes {
-  LOADING_TODOS = "LOADING_TODOS",
-  FETCHED_TODOS = "FETCHED_TODOS",
-  ERROR_TODOS = "ERROR_TODOS"
+  LOADING_TODOS = 'LOADING_TODOS',
+  ADDING_TODO = 'ADDING_TODO',
+  FETCHED_TODOS = 'FETCHED_TODOS',
+  ERROR_TODOS = 'ERROR_TODOS',
+  ADDED_TODO = 'ADDED_TODO',
 }
 
 /**
  * Action Types
  */
+export type AddingTodo = {
+  type: ActionTypes.ADDING_TODO;
+  adding: boolean;
+  todo: Todo;
+};
+
+export type AddedTodo = {
+  type: ActionTypes.ADDED_TODO;
+  adding: boolean;
+};
+
 export type LoadingTodos = {
   type: ActionTypes.LOADING_TODOS;
   loading: boolean;
@@ -30,5 +43,6 @@ export type ErrorTodos = {
 export type TodoState = {
   todos: Todo[];
   loading: boolean;
+  adding: boolean;
   error?: string;
 };
