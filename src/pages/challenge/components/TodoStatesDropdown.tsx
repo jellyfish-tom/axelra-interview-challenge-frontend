@@ -70,10 +70,11 @@ export interface DropdownItem {
 export const TodoStatesDropdown = (props: {
   onClick: any;
   items: DropdownItem[];
+  initialLabel: string;
 }) => {
-  const { onClick, items } = props;
+  const { onClick, items, initialLabel } = props;
   const [activeState, setActiveState] = useState({
-    label: 'Pick state',
+    label: initialLabel,
     value: -1,
   });
 

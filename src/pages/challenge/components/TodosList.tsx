@@ -1,27 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
-import { __GRAY_SCALE } from '../../../layout/Theme';
 import { Todo } from '../../../model/Todo';
 import { TodosListItem } from './TodosListItem';
+import empty from '../../../assets/empty.svg';
 
-const Container = styled.div`
-  border: 1px solid ${__GRAY_SCALE._200};
-  padding: 1em;
-  border-radius: 6px;
+const EmptyListImg = styled.img`
+  margin: 40px auto 30px;
+  width: fit-content;
+  display: flex;
 `;
 
 export const TodosList = (props: { todos: Todo[] }) => {
   const { todos } = props;
 
   return (
-    <Container>
+    <>
       {todos.length > 0 ? (
-        todos.map((todo) => (
-          <TodosListItem key={todo._id} todo={todo}></TodosListItem>
+        todos.map((todo, index) => (
+          <TodosListItem
+            index={index}
+            key={todo._id}
+            todo={todo}
+          ></TodosListItem>
         ))
       ) : (
-        <p>No things to do boss</p>
+        <EmptyListImg src={empty} />
       )}
-    </Container>
+    </>
   );
 };

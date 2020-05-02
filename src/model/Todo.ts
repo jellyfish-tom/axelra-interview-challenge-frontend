@@ -9,3 +9,8 @@ export interface PostableTodo {
 export interface Todo extends PostableTodo {
   _id: string;
 }
+
+export const POSSIBLE_TODO_STATES = [
+  { value: 0, label: 'In progress' },
+  { value: 1, label: 'Completed' },
+];
