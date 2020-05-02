@@ -33,7 +33,6 @@ export const login = (email: string, password: string): any => {
       .then((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
-
         window.location.reload(true);
       })
       .catch((error: string) => {
@@ -75,12 +74,14 @@ export const register = (email: string, password: string): any => {
       HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
     )
       .then((res) => res.json())
-      .then((user) => {
-        if (user) {
-          login(email, password);
-        }
+      .then((response) => {
+        const { user } = response;
 
-        return user;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          // dispatch({ type: ActionTypes.REGISTER_SUCCESS, user });
+          window.location.reload(true);
+        }
       });
   };
 };

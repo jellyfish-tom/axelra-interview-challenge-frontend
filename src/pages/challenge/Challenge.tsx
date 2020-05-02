@@ -10,9 +10,15 @@ const Title = styled.h1`
 `;
 
 const UnconnectedChallenge = (props: { logout: Logout }) => {
+  const { logout } = props;
+
+  const onLogout = () => {
+    logout();
+  };
+
   return (
     <>
-      <button onClick={() => logout()}></button>
+      <button onClick={onLogout}>Logout</button>
       <Title>Axelra Trello Challenge</Title>
       <Board></Board>
     </>
