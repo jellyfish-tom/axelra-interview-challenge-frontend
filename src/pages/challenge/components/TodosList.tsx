@@ -10,11 +10,18 @@ const EmptyListImg = styled.img`
   display: flex;
 `;
 
-export const TodosList = (props: { todos: Todo[] }) => {
-  const { todos } = props;
+const TodoList = styled.div`
+  flex: 1;
+`;
+
+const ListHeader = styled.h1``;
+
+export const TodosList = (props: { todos: Todo[]; header: string }) => {
+  const { todos, header } = props;
 
   return (
-    <>
+    <TodoList>
+      <ListHeader>{header}</ListHeader>
       {todos.length > 0 ? (
         todos.map((todo, index) => (
           <TodosListItem
@@ -26,6 +33,6 @@ export const TodosList = (props: { todos: Todo[] }) => {
       ) : (
         <EmptyListImg src={empty} />
       )}
-    </>
+    </TodoList>
   );
 };

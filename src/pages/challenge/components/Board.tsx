@@ -9,11 +9,18 @@ import { TodosList } from './TodosList';
 import { TodosControls } from './TodosControls';
 import { Spinner } from '../../../layout/UI/Spinners/Spinner';
 import { __COLORS } from '../../../layout/Theme';
+import { Todo } from '../../../model/Todo';
 
 const Container = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
   padding: 1em;
   border-radius: 6px;
+`;
+
+const ListsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Board = (props: { fetchTodos: FetchTodos }) => {
@@ -26,14 +33,28 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
     fetchTodos();
   }, [fetchTodos]);
 
+  const filterTodosByState = (todos: Todo[], completed: boolean) =>
+    todos.filter((todo) => todo.completed === completed);
+
   return (
     <Container>
       <TodosControls></TodosControls>
-      {!todos ? (
-        <Spinner color={__COLORS.SECONDARY}></Spinner> // TODO: adjust positino of loader
-      ) : (
-        <TodosList todos={todos.todos}></TodosList>
-      )}
+      <ListsContainer>
+        {!todos.loading ? ( // TODO: cos tu nie gra z tym loadingiem
+          <Spinner color={__COLORS.SECONDARY}></Spinner> // TODO: adjust position of loader
+        ) : (
+          <>
+            <TodosList
+              header="Tasks in progress"
+              todos={filterTodosByState(todos.todos, false)}
+            ></TodosList>
+            <TodosList
+              header="Completed tasks"
+              todos={filterTodosByState(todos.todos, true)}
+            ></TodosList>
+          </>
+        )}
+      </ListsContainer>
     </Container>
   );
 };
