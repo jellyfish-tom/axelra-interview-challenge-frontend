@@ -5,6 +5,7 @@ import {
   LoadingTodos,
   TodoState,
   AddingTodo,
+  ErrorTodos,
 } from './types';
 
 const initialState: TodoState = {
@@ -13,10 +14,10 @@ const initialState: TodoState = {
   adding: false,
 };
 
-const todoReducer = () => {
+export const todoReducer = () => {
   return (
     state = initialState,
-    action: FetchedTodos | LoadingTodos | AddingTodo | AddedTodo
+    action: FetchedTodos | LoadingTodos | AddingTodo | AddedTodo | ErrorTodos
   ) => {
     switch (action.type) {
       case ActionTypes.LOADING_TODOS:
@@ -25,7 +26,6 @@ const todoReducer = () => {
         return {
           ...state,
           adding: action.adding,
-          todos: [...state.todos, action.todo],
         };
       case ActionTypes.ADDED_TODO:
         return { ...state, adding: action.adding };
@@ -33,12 +33,14 @@ const todoReducer = () => {
         return {
           ...state,
           todos: action.todos,
-          loading: action.loading,
+        };
+      case ActionTypes.ERROR_TODOS:
+        return {
+          ...state,
+          error: action.error,
         };
       default:
         return state;
     }
   };
 };
-
-export default todoReducer;

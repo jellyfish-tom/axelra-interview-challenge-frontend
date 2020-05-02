@@ -3,7 +3,7 @@ export const getDomain = () => {
     // TODO: insert prod url
     return '';
   }
-  return 'http://localhost:27017';
+  return 'http://localhost:4040';
 };
 
 const isProduction = () => {

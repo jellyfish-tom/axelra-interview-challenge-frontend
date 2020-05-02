@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { __GRAY_SCALE } from '../layout/Theme';
-import { Todo } from '../model/Todo';
+import { __GRAY_SCALE } from '../../../layout/Theme';
+import { Todo } from '../../../model/Todo';
 import { TodosListItem } from './TodosListItem';
 
 const Container = styled.div`

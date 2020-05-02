@@ -1,21 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import Board from './Board';
+import Board from './components/Board';
+
+import { connect } from 'react-redux';
+import { logout, Logout } from '../../reducers/auth/actions';
 
 const Title = styled.h1`
   font-size: 32px;
 `;
 
-export const AxelraTrello = () => {
+const UnconnectedChallenge = (props: { logout: Logout }) => {
   return (
     <>
+      <button onClick={() => logout()}></button>
       <Title>Axelra Trello Challenge</Title>
       <Board></Board>
     </>
   );
 };
 
-export default AxelraTrello;
+export const Challenge = connect(null, {
+  logout,
+})(UnconnectedChallenge);
 
 // <h1>Heading H1</h1>
 //         <h2>Heading H2</h2>

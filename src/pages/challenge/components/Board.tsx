@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { __GRAY_SCALE } from '../layout/Theme';
-import { fetchTodos, FetchTodos } from '../reducers/todos/actions';
-import { RootState } from '../reducers/store';
-import { TodoState } from '../reducers/todos/types';
+import { __GRAY_SCALE } from '../../../layout/Theme';
+import { fetchTodos, FetchTodos } from '../../../reducers/todos/actions';
+import { RootState } from '../../../reducers/store';
+import { TodoState } from '../../../reducers/todos/types';
 import { connect, useSelector } from 'react-redux';
 import { TodosList } from './TodosList';
 import { TodosControls } from './TodosControls';
-import { Spinner } from '../layout/UI/Spinners/Spinner';
-import { __COLORS } from '../layout/Theme';
+import { Spinner } from '../../../layout/UI/Spinners/Spinner';
+import { __COLORS } from '../../../layout/Theme';
 
 const Container = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
@@ -24,12 +24,12 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [fetchTodos]);
 
   return (
     <Container>
       <TodosControls></TodosControls>
-      {todos && todos.loading ? (
+      {!todos ? (
         <Spinner color={__COLORS.SECONDARY}></Spinner> // TODO: adjust positino of loader
       ) : (
         <TodosList todos={todos.todos}></TodosList>

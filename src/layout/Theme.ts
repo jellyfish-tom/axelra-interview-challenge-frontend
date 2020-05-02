@@ -40,10 +40,11 @@ export enum __ALERTS {
   WARNING = '#fb6240',
   ERROR = '#f5365c',
 }
+
 // You can either import a Google Font: https://fonts.google.com
 // Or declare a custom font: https://tinyurl.com/y6omstqa
-// eslint-disable-next-line no-unexpected-multiline
 // @ts-ignore
+// eslint-disable-next-line no-unexpected-multiline
 export const GlobalStyle = createGlobalStyle<{
   theme: ThemeProviderProps<any>;
 }>`

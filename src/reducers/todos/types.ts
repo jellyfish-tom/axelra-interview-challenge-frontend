@@ -8,13 +8,9 @@ export enum ActionTypes {
   ADDED_TODO = 'ADDED_TODO',
 }
 
-/**
- * Action Types
- */
 export type AddingTodo = {
   type: ActionTypes.ADDING_TODO;
   adding: boolean;
-  todo: Todo;
 };
 
 export type AddedTodo = {
@@ -37,9 +33,6 @@ export type ErrorTodos = {
   loading: boolean;
 };
 
-/**
- * State Type
- */
 export type TodoState = {
   todos: Todo[];
   loading: boolean;

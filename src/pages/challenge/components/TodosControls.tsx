@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { __ALERTS, __COLORS, __GRAY_SCALE } from '../layout/Theme';
-import { addTodo, AddTodo } from '../reducers/todos/actions';
+import { __GRAY_SCALE } from '../../../layout/Theme';
+import { addTodo, AddTodo } from '../../../reducers/todos/actions';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
@@ -9,6 +9,10 @@ const Container = styled.div`
   padding: 1em;
   border-radius: 6px;
 `;
+
+const Input = styled.input``;
+
+const Button = styled.button``;
 
 const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
   const { addTodo } = props;
@@ -33,7 +37,7 @@ const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
             if (node) input = node;
           }}
         />
-        <button type="submit">Add Todo</button>
+        <Button type="submit">Add Todo</Button>
       </form>
     </Container>
   );
@@ -42,5 +46,3 @@ const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
 export const TodosControls = connect(null, {
   addTodo,
 })(UnconnectedTodosControls);
-
-const Input = styled.input``;

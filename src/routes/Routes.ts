@@ -1,2 +1,4 @@
-export const CHALLENGE = "/challenge";
-
+export const routes = {
+  challenge: '/challenge',
+  login: '/login',
+};

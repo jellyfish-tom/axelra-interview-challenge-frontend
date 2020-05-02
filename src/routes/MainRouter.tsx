@@ -1,14 +1,18 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
-} from "react-router-dom";
-import AxelraTrello from "../components/AxelraTrello";
-import { EXTRA_SMALL_DEVICES, LARGE_DEVICES } from "../layout/Mobile";
-import {CHALLENGE} from "./Routes";
+  Redirect,
+} from 'react-router-dom';
+import { Challenge } from '../pages/challenge/Challenge';
+import { LoginPage } from '../pages/login/Login';
+
+import { EXTRA_SMALL_DEVICES, LARGE_DEVICES } from '../layout/Mobile';
+import { PrivateRoute } from '../components/PrivateRoute';
+
+import { routes } from './Routes';
 
 const Container = styled.div``;
 
@@ -30,21 +34,27 @@ const MainRouter = () => {
   return (
     <Container>
       <Router>
-       {/* <NavigationTabs />*/}
         <RoutesContainer>
           <Switch>
             <Route
-              component={AxelraTrello}
-              path={CHALLENGE}
+              path={routes.login}
+              render={(props) => {
+                return localStorage.getItem('user') ? (
+                  <Redirect
+                    to={{ pathname: '/', state: { from: props.location } }}
+                  />
+                ) : (
+                  <LoginPage />
+                );
+              }}
               exact
             />
-
-            {/*Intentionally left at the bottom*/}
+            <PrivateRoute path="/" component={Challenge} exact />
             <Route
               exact
-              path={"/*"}
+              path={'/*'}
               render={() => {
-                return <Redirect to={CHALLENGE} />;
+                return <Redirect to={'/'} />;
               }}
             />
           </Switch>
