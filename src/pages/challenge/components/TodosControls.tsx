@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { __GRAY_SCALE } from '../../../layout/Theme';
 import { addTodo, AddTodo } from '../../../reducers/todos/actions';
 import { connect } from 'react-redux';
+import { getCurrentUser } from '../../../helpers/user';
+import { Menu } from './LabelsDropdown';
 
 const Container = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
@@ -20,15 +22,23 @@ const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
 
   return (
     <Container>
+      <Menu></Menu>
       <form
-        onSubmit={(e) => {
+        onSubmit={(e: any) => {
           e.preventDefault();
 
           if (!input.value.trim()) {
             return;
           }
 
-          addTodo({ title: input.value, userId: '', id: 0, completed: false });
+          const currentUser = getCurrentUser();
+
+          addTodo({
+            uid: currentUser._id,
+            title: input.value,
+            completed: false,
+          });
+
           input.value = '';
         }}
       >

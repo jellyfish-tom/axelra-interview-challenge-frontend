@@ -5,14 +5,16 @@ export enum PROTOCOL_METHOD {
   DELETE = 'DELETE',
 }
 
-export const HTTP_OPTIONS = (method: PROTOCOL_METHOD, body?: string) => {
+export const HTTP_OPTIONS = (method: PROTOCOL_METHOD, body?: any) => {
+  console.log('body');
+  console.log(body);
   return {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
-    mode: 'cors' as 'cors' | 'same-origin' | 'navigate' | 'no-cors' | undefined,
+    // mode: 'cors' as 'cors' | 'same-origin' | 'navigate' | 'no-cors' | undefined,
     credentials: 'include' as 'include' | 'omit' | 'same-origin' | undefined,
-    body,
+    body: body ? JSON.stringify(body) : null,
   };
 };

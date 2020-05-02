@@ -16,7 +16,9 @@ export const TodosList = (props: { todos: Todo[] }) => {
   return (
     <Container>
       {todos.length > 0 ? (
-        todos.map((todo) => <TodosListItem todo={todo}></TodosListItem>)
+        todos.map((todo) => (
+          <TodosListItem key={todo._id} todo={todo}></TodosListItem>
+        ))
       ) : (
         <p>No things to do boss</p>
       )}

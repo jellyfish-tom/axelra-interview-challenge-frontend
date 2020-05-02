@@ -1,7 +1,11 @@
 // Example of a simple type
-export type Todo = {
-  userId: string;
-  id: number;
+
+export interface PostableTodo {
+  uid: string;
   title: string;
   completed: boolean;
-};
+}
+
+export interface Todo extends PostableTodo {
+  _id: string;
+}
