@@ -1,55 +1,99 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { __GRAY_SCALE } from '../../../layout/Theme';
 import { addTodo, AddTodo } from '../../../reducers/todos/actions';
 import { connect } from 'react-redux';
 import { getCurrentUser } from '../../../helpers/user';
-import { Menu } from './LabelsDropdown';
+import { TodoStatesDropdown, DropdownItem } from './TodoStatesDropdown';
 
-const Container = styled.div`
-  border: 1px solid ${__GRAY_SCALE._200};
-  padding: 1em;
-  border-radius: 6px;
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1em;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid ${__GRAY_SCALE._400};
+  margin: 0 10px 0 2px;
+  color: black;
+  padding: 0 5px;
+  box-sizing: border-box;
+  font-size: 13px;
+  width: calc(100% - 190px);
+  outline: none;
+`;
 
-const Button = styled.button``;
+const Button = styled.button`
+  display: inline-block;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid ${__GRAY_SCALE._400};
+  width: 100px;
+  border-radius: 3px;
+  height: 30px;
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  margin-right: 3px;
+`;
+
+const todoStateNotPicked = -1;
 
 const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
+  const [todoState, setTodoState] = useState(todoStateNotPicked);
   const { addTodo } = props;
+  const todoStates = [
+    { value: 0, label: 'In progress' },
+    { value: 1, label: 'Completed' },
+  ];
   let input: HTMLInputElement;
 
+  const onMenuItemClick = (dropdownItem: DropdownItem) => {
+    setTodoState(dropdownItem.value);
+  };
+
+  const onFormSubmit = (e: any) => {
+    e.preventDefault();
+
+    if (todoState === todoStateNotPicked || !input.value.trim()) {
+      alert('Form not valid'); // TODO: dispatch alert
+      return;
+    }
+
+    const currentUser = getCurrentUser();
+
+    addTodo({
+      uid: currentUser._id,
+      title: input.value,
+      completed: !!todoState,
+    });
+
+    input.value = '';
+  };
+
   return (
-    <Container>
-      <Menu></Menu>
-      <form
-        onSubmit={(e: any) => {
-          e.preventDefault();
-
-          if (!input.value.trim()) {
-            return;
-          }
-
-          const currentUser = getCurrentUser();
-
-          addTodo({
-            uid: currentUser._id,
-            title: input.value,
-            completed: false,
-          });
-
-          input.value = '';
-        }}
-      >
+    <>
+      <Form onSubmit={onFormSubmit}>
         <Input
           ref={(node: HTMLInputElement) => {
             if (node) input = node;
           }}
         />
+        <TodoStatesDropdown
+          onClick={onMenuItemClick}
+          items={todoStates}
+        ></TodoStatesDropdown>
         <Button type="submit">Add Todo</Button>
-      </form>
-    </Container>
+      </Form>
+    </>
   );
 };
 
