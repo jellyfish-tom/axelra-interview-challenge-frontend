@@ -5,21 +5,21 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { TodoState } from './todos/types';
 import { todoReducer } from './todos/reducer';
 
-import { AlertState } from './alert/types';
-import { alertReducer } from './alert/reducer';
+import { ErrorState } from './error/types';
+import { errorReducer } from './error/reducer';
 
 import { AuthState } from './auth/types';
 import { authReducer } from './auth/reducer';
 
 export type RootState = {
   todos: TodoState;
-  alert: AlertState;
+  error: ErrorState;
   auth: AuthState;
 };
 
 const rootReducer = combineReducers({
   todos: todoReducer(),
-  alert: alertReducer(),
+  error: errorReducer(),
   auth: authReducer(),
 });
 

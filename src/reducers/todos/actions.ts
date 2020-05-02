@@ -32,32 +32,43 @@ export const fetchTodos = (): any => {
       loading: true,
     });
 
-    fetch(
-      `${api.todos.list}${getCurrentUserEmailAsURLParam()}`,
-      HTTP_OPTIONS(PROTOCOL_METHOD.GET)
-    )
-      .then((res: any) => res.json())
-      .then((todos: Todo[]) => {
-        console.log('fetched todos:');
-        console.log(todos);
+    dispatch({
+      type: ActionTypes.ERROR_TODOS,
+      error: 'Lets test it!',
+      loading: false,
+    });
+
+    try {
+      const response = await fetch(
+        `${api.todos.list}${getCurrentUserEmailAsURLParam()}`,
+        HTTP_OPTIONS(PROTOCOL_METHOD.GET)
+      );
+
+      if (response.ok) {
+        const todos = await response.json();
 
         dispatch({
           type: ActionTypes.FETCHED_TODOS,
-          loading: false,
           todos,
+          loading: false,
         });
-      })
-      .catch((error: string) => {
+      } else {
         dispatch({
           type: ActionTypes.ERROR_TODOS,
-          error,
+          error: response.statusText,
           loading: false,
         });
+      }
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.ERROR_TODOS,
+        error: "Sorry, can't talk to our servers right now.",
+        loading: false,
       });
+    }
   };
 };
 
-//@ts-ignore  TODO - remove
 export const addTodo = (todo: PostableTodo): any => {
   return async (dispatch: ThunkDispatch<{}, {}, ErrorTodos | AddingTodo>) => {
     dispatch({

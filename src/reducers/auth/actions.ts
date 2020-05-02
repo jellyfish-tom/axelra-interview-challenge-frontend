@@ -8,10 +8,11 @@ import {
   Register,
 } from './types';
 import {
-  ActionTypes as AlertActionTypes,
-  ShowAlert,
-  AlertMessageType,
-} from '../alert/types';
+  ActionTypes as ErrorActionTypes,
+  ErrorMessageType,
+  SetError,
+  HideError,
+} from '../error/types';
 import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
 
@@ -20,7 +21,7 @@ export const login = (email: string, password: string): any => {
     dispatch: ThunkDispatch<
       {},
       {},
-      LoginRequest | LoginFailure | LoginSuccess | ShowAlert
+      LoginRequest | LoginFailure | LoginSuccess | SetError
     >
   ) => {
     dispatch({ type: ActionTypes.LOGIN_REQUEST });
@@ -38,16 +39,16 @@ export const login = (email: string, password: string): any => {
       .catch((error: string) => {
         dispatch({ type: ActionTypes.LOGIN_FAILURE });
         dispatch({
-          type: AlertActionTypes.ALERT_SHOW,
-          message: error,
-          alertType: AlertMessageType.ERROR,
+          error,
+          type: ErrorActionTypes.SET_ERROR,
+          errorType: ErrorMessageType.ERROR,
         });
       });
   };
 };
 
 export const logout = (): any => {
-  return async (dispatch: ThunkDispatch<{}, {}, Logout | ShowAlert>) => {
+  return async (dispatch: ThunkDispatch<{}, {}, Logout | SetError>) => {
     fetch(api.auth.logout, HTTP_OPTIONS(PROTOCOL_METHOD.GET))
       .then((res) => res.json())
       .then((_) => {
@@ -57,16 +58,16 @@ export const logout = (): any => {
       })
       .catch((error: string) => {
         dispatch({
-          type: AlertActionTypes.ALERT_SHOW,
-          message: error,
-          alertType: AlertMessageType.ERROR,
+          error,
+          type: ErrorActionTypes.SET_ERROR,
+          errorType: ErrorMessageType.ERROR,
         });
       });
   };
 };
 
 export const register = (email: string, password: string): any => {
-  return async (dispatch: ThunkDispatch<{}, {}, Register | ShowAlert>) => {
+  return async (dispatch: ThunkDispatch<{}, {}, Register | SetError>) => {
     dispatch({ type: ActionTypes.REGISTER });
 
     fetch(

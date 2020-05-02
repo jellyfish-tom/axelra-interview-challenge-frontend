@@ -23,8 +23,8 @@ export type LoadingTodos = {
   loading: boolean;
 };
 export type FetchedTodos = {
-  todos: Todo[];
   type: ActionTypes.FETCHED_TODOS;
+  todos: Todo[];
   loading: boolean;
 };
 export type ErrorTodos = {

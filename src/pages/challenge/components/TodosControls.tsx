@@ -80,6 +80,7 @@ const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
     <>
       <Form onSubmit={onFormSubmit}>
         <Input
+          placeholder="Add description of your todo here"
           ref={(node: HTMLInputElement) => {
             if (node) input = node;
           }}
