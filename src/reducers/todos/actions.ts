@@ -10,21 +10,13 @@ import {
 } from './types';
 import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
-import { getCurrentUser } from '../../helpers/user';
 import { Todo, PostableTodo } from '../../model/Todo';
 
-const getCurrentUserEmailAsURLParam = () => {
-  const currentUser = getCurrentUser();
-
-  return currentUser
-    ? '?' +
-        new URLSearchParams({
-          uid: currentUser._id,
-        })
-    : '';
+const getUidQueryString = (uid: string) => {
+  return `${uid ? `?${uid}` : ''}`;
 };
 
-export const fetchTodos = (): any => {
+export const fetchTodos = (uid: string): any => {
   return async (
     dispatch: ThunkDispatch<
       {},
@@ -38,7 +30,7 @@ export const fetchTodos = (): any => {
 
     try {
       const response = await fetch(
-        `${api.todos.list}${getCurrentUserEmailAsURLParam()}`,
+        `${api.todos.list}${getUidQueryString(uid)}`,
         HTTP_OPTIONS(PROTOCOL_METHOD.GET)
       );
 
@@ -86,7 +78,7 @@ export const addTodo = (todo: PostableTodo): any => {
         dispatch({
           type: ActionTypes.ADD_TODO_SUCCESS,
         });
-        dispatch(fetchTodos());
+        dispatch(fetchTodos(todo.uid));
       } else {
         dispatch({
           type: ActionTypes.ADD_TODO_FAILURE,

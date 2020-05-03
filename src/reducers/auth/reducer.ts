@@ -12,6 +12,8 @@ import {
   RegisterFailure,
 } from './types';
 
+import { UnloggedUser } from '../../model/User';
+
 const localStorageUser = localStorage.getItem('user');
 const initialState: AuthState = localStorageUser
   ? {
@@ -22,7 +24,7 @@ const initialState: AuthState = localStorageUser
   : {
       logged: false,
       logging: false,
-      user: null,
+      user: UnloggedUser,
     };
 
 export const authReducer = () => {

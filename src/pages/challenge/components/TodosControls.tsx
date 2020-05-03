@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { __GRAY_SCALE } from '../../../layout/Theme';
 import { addTodo, AddTodo } from '../../../reducers/todos/actions';
 import { POSSIBLE_TODO_STATES } from '../../../model/Todo';
-import { connect } from 'react-redux';
-import { getCurrentUser } from '../../../helpers/user';
+import { connect, useSelector } from 'react-redux';
 import { TodoStatesDropdown, DropdownItem } from './TodoStatesDropdown';
+import { RootState } from '../../../reducers/store';
+import { AuthState } from '../../../reducers/auth/types';
 
 const Form = styled.form`
   display: flex;
@@ -49,6 +50,9 @@ const Button = styled.button`
 const todoStateNotPicked = -1;
 
 const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
+  const { auth }: { auth: AuthState } = useSelector(
+    (state: RootState) => state
+  );
   const [todoState, setTodoState] = useState(todoStateNotPicked);
   const { addTodo } = props;
   let input: HTMLInputElement;
@@ -65,10 +69,8 @@ const UnconnectedTodosControls = (props: { addTodo: AddTodo }) => {
       return;
     }
 
-    const currentUser = getCurrentUser();
-
     addTodo({
-      uid: currentUser._id,
+      uid: auth.user._id,
       title: input.value,
       completed: !!todoState,
     });

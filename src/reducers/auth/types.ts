@@ -54,7 +54,7 @@ export type RegisterFailure = {
 };
 
 export type AuthState = {
-  user: User | null;
+  user: User;
   logged: boolean;
   logging: boolean;
 };

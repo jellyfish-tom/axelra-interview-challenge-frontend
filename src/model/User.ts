@@ -4,3 +4,9 @@ export type User = {
   email: string;
   createdAt: string;
 };
+
+export const UnloggedUser: User = {
+  _id: '',
+  email: '',
+  createdAt: '',
+};
