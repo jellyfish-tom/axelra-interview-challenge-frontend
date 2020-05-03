@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { Challenge } from '../pages/challenge/Challenge';
 import { LoginPage } from '../pages/login/Login';
-import { ErrorNotification } from '../components/ErrorNotification';
+import { Notification } from '../components/Notification';
 import { EXTRA_SMALL_DEVICES, LARGE_DEVICES } from '../layout/Mobile';
 import { PrivateRoute } from '../components/PrivateRoute';
 
@@ -33,7 +33,7 @@ const RoutesContainer = styled.div`
 const MainRouter = () => {
   return (
     <Container>
-      <ErrorNotification></ErrorNotification>
+      <Notification></Notification>
       <Router>
         <RoutesContainer>
           <Switch>
