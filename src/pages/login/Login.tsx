@@ -4,20 +4,33 @@ import { connect, useDispatch } from 'react-redux';
 import { login, Login, register, Register } from '../../reducers/auth/actions';
 import { __GRAY_SCALE } from '../../layout/Theme';
 import { ActionTypes } from '../../reducers/auth/types';
+import { Button, Input } from '../../layout/UI/Components';
 
 const Title = styled.h1`
   font-size: 32px;
 `;
+
 const Container = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
   padding: 1em;
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
-const Input = styled.input``;
-const Button = styled.button``;
+
 const CallToAction = styled.span`
   color: blue;
   hover: pointer;
+  margin: 10px;
+`;
+
+const LoginInput = styled(Input)`
+  margin: 5px;
+`;
+
+const LoginButton = styled(Button)`
+  margin: 10px;
 `;
 
 const useCleanUserState = () => {
@@ -53,15 +66,18 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
   return (
     <Container>
       <Title>Axelera Challenge Login</Title>
-      <Input
+      <LoginInput
         placeholder="email"
         onChange={(e: any) => setEmail(e.target.value)}
-      ></Input>
-      <Input
+      ></LoginInput>
+      <LoginInput
         placeholder="password"
         type="password"
         onChange={(e: any) => setPassword(e.target.value)}
-      ></Input>
+      ></LoginInput>
+      <LoginButton onClick={registrationEnabled ? onRegister : onLogin}>
+        {registrationEnabled ? 'Register' : 'Login'}
+      </LoginButton>
       {registrationEnabled ? (
         <CallToAction onClick={onToggleRegistration}>
           Go back to Login
@@ -71,9 +87,6 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
           Not registered yet?
         </CallToAction>
       )}
-      <Button onClick={registrationEnabled ? onRegister : onLogin}>
-        {registrationEnabled ? 'Register' : 'Login'}
-      </Button>
     </Container>
   );
 };

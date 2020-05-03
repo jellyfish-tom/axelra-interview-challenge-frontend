@@ -1,28 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { __GRAY_SCALE } from '../../../layout/Theme';
+import { Button } from '../../../layout/UI/Components/Button';
 
 const StyledLi = styled.li`
   float: left;
-`;
-
-const Dropbtn = styled.button`
-  display: inline-block;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  font-size: 14px;
-  border: 1px solid ${__GRAY_SCALE._400};
-  width: 100px;
-  border-radius: 3px;
-  height: 30px;
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-right: 10px;
-  outline: none;
 `;
 
 const DropDownContent = styled.div`
@@ -85,7 +67,7 @@ export const TodoStatesDropdown = (props: {
 
   return (
     <DropDownLi>
-      <Dropbtn>{activeState.label}</Dropbtn>
+      <Button>{activeState.label}</Button>
       <DropDownContent>
         {items.map((item) => (
           <Item key={item.value} onClick={() => onMenuItemClick(item)}>

@@ -6,8 +6,6 @@ export enum PROTOCOL_METHOD {
 }
 
 export const HTTP_OPTIONS = (method: PROTOCOL_METHOD, body?: any) => {
-  console.log('body');
-  console.log(body);
   return {
     method,
     headers: {

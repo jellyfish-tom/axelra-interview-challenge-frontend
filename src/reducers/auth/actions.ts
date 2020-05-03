@@ -23,7 +23,7 @@ export const login = (email: string, password: string): any => {
     try {
       const response = await fetch(
         api.auth.login,
-        HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
+        HTTP_OPTIONS(PROTOCOL_METHOD.POST, { email, password })
       );
 
       if (response.ok) {
@@ -95,7 +95,7 @@ export const register = (email: string, password: string): any => {
     try {
       const response = await fetch(
         api.auth.register,
-        HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
+        HTTP_OPTIONS(PROTOCOL_METHOD.POST, { email, password })
       );
 
       if (response.ok) {
