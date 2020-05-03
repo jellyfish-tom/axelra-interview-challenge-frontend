@@ -1,8 +1,8 @@
-import { ActionTypes, HideNotification } from './types';
+import { ActionTypes, ClearNotification } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 
-export const hideNotification = (): any => {
-  return async (dispatch: ThunkDispatch<{}, {}, HideNotification>) => {
+export const clearNotification = (): any => {
+  return async (dispatch: ThunkDispatch<{}, {}, ClearNotification>) => {
     dispatch({
       type: ActionTypes.HIDE_ERROR,
       error: null,
@@ -10,4 +10,4 @@ export const hideNotification = (): any => {
   };
 };
 
-export type HideNotification = typeof hideNotification;
+export type ClearNotification = typeof clearNotification;

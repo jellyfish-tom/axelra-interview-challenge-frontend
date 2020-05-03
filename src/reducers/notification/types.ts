@@ -10,7 +10,7 @@ export type NotificationState = {
   isOpen: boolean;
 };
 
-export type HideNotification = {
+export type ClearNotification = {
   type: ActionTypes.HIDE_ERROR;
   error: null;
 };

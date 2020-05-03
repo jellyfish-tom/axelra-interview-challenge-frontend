@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { connect, useSelector } from 'react-redux';
 import { RootState } from '../reducers/store';
 import { NotificationState } from '../reducers/notification/types';
 import {
-  hideNotification,
-  HideNotification,
+  clearNotification,
+  ClearNotification,
 } from '../reducers/notification/actions';
 import { __ALERTS } from '../layout/Theme';
 
@@ -35,7 +35,7 @@ const Container = styled(BackgroundColor)`
   left: 0;
   position: absolute;
   right: 0;
-  top: -35px;
+  top: -300px;
   margin: 0 auto;
   transition: top 0.5s;
   background: white;
@@ -55,51 +55,49 @@ const Message = styled(BackgroundColor)`
   box-sizing: border-box;
 `;
 
-const Close = styled.span`
-  cursor: pointer;
-  width: 20px;
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  display: none;
-
-  &.displayed {
-    display: flex;
-  }
-`;
-
 const UnconnectedNotification = (props: {
-  hideNotification: HideNotification;
+  clearNotification: ClearNotification;
 }) => {
   const { notification }: { notification: NotificationState } = useSelector(
     (state: RootState) => state
   );
-  const { hideNotification } = props;
+  const { clearNotification } = props;
+  const [notificationVisible, setNotificationVisible] = useState(false);
+  const { error, warning, info, success } = notification;
 
-  const isNotificationVisible = () => {
-    const { error, warning, info, success } = notification;
+  const [slideUpTimeout, setSlideUpTimeout] = useState();
+  const [clearNotificationTimeout, setClearNotificationTimeout] = useState();
 
-    return error || warning || info || success;
-  };
+  useEffect(() => {
+    if (error || warning || info || success) {
+      setNotificationVisible(true);
+      clearTimeout(slideUpTimeout);
+      clearTimeout(clearNotificationTimeout);
 
-  const isDisplayable = () => {
-    return (
-      (notification.error && 'error') ||
-      (notification.warning && 'warning') ||
-      (notification.info && 'info') ||
-      (notification.success && 'success')
-    );
-  };
+      const _slideUpTimeout = setTimeout(() => {
+        setNotificationVisible(false);
 
-  const getContainerClassName = () => {
-    const visibleClass = `${isNotificationVisible() && 'visible'}`;
-    const backgroundClass = isDisplayable();
+        const _clearNotificationTimeout = setTimeout(() => {
+          clearNotification();
+        }, 700);
 
-    return `${visibleClass} ${backgroundClass}`;
-  };
+        setClearNotificationTimeout(_clearNotificationTimeout);
+      }, 3000);
+
+      setSlideUpTimeout(_slideUpTimeout);
+    }
+  }, [
+    slideUpTimeout,
+    clearNotificationTimeout,
+    clearNotification,
+    error,
+    warning,
+    info,
+    success,
+  ]);
 
   return (
-    <Container className={getContainerClassName()}>
+    <Container className={`${notificationVisible && 'visible'}`}>
       {notification.error && (
         <Message className="error">{notification.error}</Message>
       )}
@@ -112,16 +110,10 @@ const UnconnectedNotification = (props: {
       {notification.success && (
         <Message className="success">{notification.success}</Message>
       )}
-      <Close
-        className={`${isDisplayable() && 'displayed'}`}
-        onClick={hideNotification}
-      >
-        X
-      </Close>
     </Container>
   );
 };
 
 export const Notification = connect(null, {
-  hideNotification,
+  clearNotification,
 })(UnconnectedNotification);

@@ -4,7 +4,6 @@ import { connect, useSelector } from 'react-redux';
 import { RootState } from '../reducers/store';
 import { AuthState } from '../reducers/auth/types';
 import { logout, Logout } from '../reducers/auth/actions';
-import { __GRAY_SCALE } from '../layout/Theme';
 import { Button } from '../layout/UI/Components/Button';
 
 const Container = styled.div`

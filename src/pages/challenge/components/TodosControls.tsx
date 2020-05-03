@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { __GRAY_SCALE } from '../../../layout/Theme';
 import { addTodo, AddTodo } from '../../../reducers/todos/actions';
 import { POSSIBLE_TODO_STATES } from '../../../model/Todo';
 import { connect, useSelector } from 'react-redux';

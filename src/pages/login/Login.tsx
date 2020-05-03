@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect, useDispatch } from 'react-redux';
 import { login, Login, register, Register } from '../../reducers/auth/actions';
-import { __GRAY_SCALE } from '../../layout/Theme';
 import { ActionTypes } from '../../reducers/auth/types';
 import { Button, Input } from '../../layout/UI/Components';
 
