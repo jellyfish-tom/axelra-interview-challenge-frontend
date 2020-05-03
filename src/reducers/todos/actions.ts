@@ -12,8 +12,10 @@ import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
 import { Todo, PostableTodo } from '../../model/Todo';
 
-const getUidQueryString = (uid: string) => {
-  return `${uid ? `?${uid}` : ''}`;
+const getUidQueryParam = (uid: string) => {
+  return `?${new URLSearchParams({
+    uid,
+  })}`;
 };
 
 export const fetchTodos = (uid: string): any => {
@@ -30,7 +32,7 @@ export const fetchTodos = (uid: string): any => {
 
     try {
       const response = await fetch(
-        `${api.todos.list}${getUidQueryString(uid)}`,
+        `${api.todos.list}${getUidQueryParam(uid)}`,
         HTTP_OPTIONS(PROTOCOL_METHOD.GET)
       );
 
