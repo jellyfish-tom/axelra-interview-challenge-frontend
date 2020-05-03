@@ -1,10 +1,12 @@
 import { ThunkDispatch } from 'redux-thunk';
 import {
   ActionTypes,
-  ErrorTodos,
-  FetchedTodos,
-  LoadingTodos,
-  AddingTodo,
+  FetchTodosFailure,
+  FetchTodosSuccess,
+  FetchTodosRequest,
+  AddTodoRequest,
+  AddTodoFailure,
+  AddTodoSuccess,
 } from './types';
 import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
@@ -24,18 +26,15 @@ const getCurrentUserEmailAsURLParam = () => {
 
 export const fetchTodos = (): any => {
   return async (
-    dispatch: ThunkDispatch<{}, {}, FetchedTodos | ErrorTodos | LoadingTodos>
+    dispatch: ThunkDispatch<
+      {},
+      {},
+      FetchTodosSuccess | FetchTodosFailure | FetchTodosRequest
+    >
   ) => {
-    console.log('fetching todos...');
     dispatch({
-      type: ActionTypes.LOADING_TODOS,
+      type: ActionTypes.FETCH_TODOS_REQUEST,
       loading: true,
-    });
-
-    dispatch({
-      type: ActionTypes.ERROR_TODOS,
-      error: 'Lets test it!',
-      loading: false,
     });
 
     try {
@@ -48,20 +47,20 @@ export const fetchTodos = (): any => {
         const todos = await response.json();
 
         dispatch({
-          type: ActionTypes.FETCHED_TODOS,
+          type: ActionTypes.FETCH_TODOS_SUCCESS,
           todos,
           loading: false,
         });
       } else {
         dispatch({
-          type: ActionTypes.ERROR_TODOS,
+          type: ActionTypes.FETCH_TODOS_FAILURE,
           error: response.statusText,
           loading: false,
         });
       }
     } catch (error) {
       dispatch({
-        type: ActionTypes.ERROR_TODOS,
+        type: ActionTypes.FETCH_TODOS_FAILURE,
         error: "Sorry, can't talk to our servers right now.",
         loading: false,
       });
@@ -70,27 +69,30 @@ export const fetchTodos = (): any => {
 };
 
 export const addTodo = (todo: PostableTodo): any => {
-  return async (dispatch: ThunkDispatch<{}, {}, ErrorTodos | AddingTodo>) => {
+  return async (
+    dispatch: ThunkDispatch<
+      {},
+      {},
+      AddTodoRequest | AddTodoSuccess | AddTodoFailure
+    >
+  ) => {
     dispatch({
-      type: ActionTypes.ADDING_TODO,
-      adding: true,
+      type: ActionTypes.ADD_TODO_REQUEST,
     });
 
     fetch(`${api.todos.list}`, HTTP_OPTIONS(PROTOCOL_METHOD.POST, todo))
       .then((res: any) => res.json())
       .then((todo: Todo) => {
         dispatch({
-          type: ActionTypes.ADDING_TODO,
-          adding: false,
+          type: ActionTypes.ADD_TODO_SUCCESS,
         });
 
         dispatch(fetchTodos());
       })
       .catch((error: string) => {
         dispatch({
-          type: ActionTypes.ERROR_TODOS,
+          type: ActionTypes.ADD_TODO_FAILURE,
           error,
-          loading: false,
         });
       });
   };

@@ -1,11 +1,12 @@
 import {
   ActionTypes,
-  AddedTodo,
-  FetchedTodos,
-  LoadingTodos,
+  AddTodoRequest,
+  AddTodoSuccess,
+  AddTodoFailure,
+  FetchTodosRequest,
+  FetchTodosSuccess,
+  FetchTodosFailure,
   TodoState,
-  AddingTodo,
-  ErrorTodos,
 } from './types';
 
 const initialState: TodoState = {
@@ -17,28 +18,36 @@ const initialState: TodoState = {
 export const todoReducer = () => {
   return (
     state = initialState,
-    action: FetchedTodos | LoadingTodos | AddingTodo | AddedTodo | ErrorTodos
+    action:
+      | FetchTodosRequest
+      | FetchTodosSuccess
+      | FetchTodosFailure
+      | AddTodoRequest
+      | AddTodoSuccess
+      | AddTodoFailure
   ) => {
     switch (action.type) {
-      case ActionTypes.LOADING_TODOS:
+      case ActionTypes.FETCH_TODOS_REQUEST:
         return { ...state, loading: action.loading };
-      case ActionTypes.ADDING_TODO:
-        return {
-          ...state,
-          adding: action.adding,
-        };
-      case ActionTypes.ADDED_TODO:
-        return { ...state, adding: action.adding };
-      case ActionTypes.FETCHED_TODOS:
+      case ActionTypes.FETCH_TODOS_SUCCESS:
         return {
           ...state,
           todos: action.todos,
         };
-      case ActionTypes.ERROR_TODOS:
+      case ActionTypes.FETCH_TODOS_FAILURE:
         return {
           ...state,
           error: action.error,
         };
+      case ActionTypes.ADD_TODO_REQUEST:
+        return {
+          ...state,
+          adding: true,
+        };
+      case ActionTypes.ADD_TODO_SUCCESS:
+        return { ...state, adding: false };
+      case ActionTypes.ADD_TODO_FAILURE:
+        return { ...state, adding: false, error: action.error };
       default:
         return state;
     }

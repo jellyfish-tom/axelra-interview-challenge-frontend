@@ -4,71 +4,80 @@ import {
   LoginRequest,
   LoginFailure,
   LoginSuccess,
-  Logout,
-  Register,
+  LogoutRequest,
+  LogoutSuccess,
+  LogoutFailure,
+  RegisterRequest,
+  RegisterSuccess,
+  RegisterFailure,
 } from './types';
-import {
-  ActionTypes as ErrorActionTypes,
-  ErrorMessageType,
-  SetError,
-  HideError,
-} from '../error/types';
 import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
 
 export const login = (email: string, password: string): any => {
   return async (
-    dispatch: ThunkDispatch<
-      {},
-      {},
-      LoginRequest | LoginFailure | LoginSuccess | SetError
-    >
+    dispatch: ThunkDispatch<{}, {}, LoginRequest | LoginFailure | LoginSuccess>
   ) => {
     dispatch({ type: ActionTypes.LOGIN_REQUEST });
 
-    fetch(
-      api.auth.login,
-      HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
-    )
-      .then((res) => res.json())
-      .then((user) => {
-        localStorage.setItem('user', JSON.stringify(user));
-        dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
-        window.location.reload(true);
-      })
-      .catch((error: string) => {
-        dispatch({ type: ActionTypes.LOGIN_FAILURE });
-        dispatch({
-          error,
-          type: ErrorActionTypes.SET_ERROR,
-          errorType: ErrorMessageType.ERROR,
+    try {
+      fetch(
+        api.auth.login,
+        HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
+      )
+        .then((res) => res.json())
+        .then((user) => {
+          localStorage.setItem('user', JSON.stringify(user));
+          dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
+          window.location.reload(true);
+        })
+        .catch((error: string) => {
+          dispatch({
+            type: ActionTypes.LOGIN_FAILURE,
+            error,
+          });
         });
-      });
+    } catch (e) {}
   };
 };
 
 export const logout = (): any => {
-  return async (dispatch: ThunkDispatch<{}, {}, Logout | SetError>) => {
+  return async (
+    dispatch: ThunkDispatch<
+      {},
+      {},
+      LogoutRequest | LogoutSuccess | LogoutFailure
+    >
+  ) => {
+    dispatch({ type: ActionTypes.LOGOUT_REQUEST });
+
     fetch(api.auth.logout, HTTP_OPTIONS(PROTOCOL_METHOD.GET))
       .then((res) => res.json())
       .then((_) => {
-        dispatch({ type: ActionTypes.LOGOUT });
+        dispatch({
+          type: ActionTypes.LOGOUT_SUCCESS,
+        });
         localStorage.removeItem('user');
         window.location.reload(true);
       })
       .catch((error: string) => {
         dispatch({
           error,
-          type: ErrorActionTypes.SET_ERROR,
-          errorType: ErrorMessageType.ERROR,
+          type: ActionTypes.LOGOUT_FAILURE,
         });
       });
   };
 };
 
 export const register = (email: string, password: string): any => {
-  return async (dispatch: ThunkDispatch<{}, {}, Register | SetError>) => {
-    dispatch({ type: ActionTypes.REGISTER });
+  return async (
+    dispatch: ThunkDispatch<
+      {},
+      {},
+      RegisterRequest | RegisterSuccess | RegisterFailure
+    >
+  ) => {
+    dispatch({ type: ActionTypes.REGISTER_REQUEST });
 
     fetch(
       api.auth.register,
@@ -80,9 +89,15 @@ export const register = (email: string, password: string): any => {
 
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          // dispatch({ type: ActionTypes.REGISTER_SUCCESS, user });
+          dispatch({ type: ActionTypes.REGISTER_SUCCESS, user });
           window.location.reload(true);
         }
+      })
+      .catch((error: string) => {
+        dispatch({
+          error,
+          type: ActionTypes.REGISTER_FAILURE,
+        });
       });
   };
 };

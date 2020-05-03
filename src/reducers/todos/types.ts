@@ -1,36 +1,40 @@
 import { Todo } from '../../model/Todo';
 
 export enum ActionTypes {
-  LOADING_TODOS = 'LOADING_TODOS',
-  ADDING_TODO = 'ADDING_TODO',
-  FETCHED_TODOS = 'FETCHED_TODOS',
-  ERROR_TODOS = 'ERROR_TODOS',
-  ADDED_TODO = 'ADDED_TODO',
+  FETCH_TODOS_REQUEST = 'FETCH_TODOS_REQUEST',
+  FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS',
+  FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE',
+  ADD_TODO_REQUEST = 'ADD_TODO_REQUEST',
+  ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS',
+  ADD_TODO_FAILURE = 'ADD_TODO_FAILURE',
 }
 
-export type AddingTodo = {
-  type: ActionTypes.ADDING_TODO;
-  adding: boolean;
+export type AddTodoRequest = {
+  type: ActionTypes.ADD_TODO_REQUEST;
 };
 
-export type AddedTodo = {
-  type: ActionTypes.ADDED_TODO;
-  adding: boolean;
+export type AddTodoSuccess = {
+  type: ActionTypes.ADD_TODO_SUCCESS;
 };
 
-export type LoadingTodos = {
-  type: ActionTypes.LOADING_TODOS;
+export type AddTodoFailure = {
+  type: ActionTypes.ADD_TODO_FAILURE;
+  error: string;
+};
+
+export type FetchTodosRequest = {
+  type: ActionTypes.FETCH_TODOS_REQUEST;
   loading: boolean;
 };
-export type FetchedTodos = {
-  type: ActionTypes.FETCHED_TODOS;
+export type FetchTodosSuccess = {
+  type: ActionTypes.FETCH_TODOS_SUCCESS;
   todos: Todo[];
   loading: boolean;
 };
-export type ErrorTodos = {
-  type: ActionTypes.ERROR_TODOS;
-  error: string;
+export type FetchTodosFailure = {
+  type: ActionTypes.FETCH_TODOS_FAILURE;
   loading: boolean;
+  error: string;
 };
 
 export type TodoState = {

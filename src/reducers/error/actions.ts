@@ -1,6 +1,7 @@
 import { ActionTypes, SetError, HideError } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 
+// action to set error manually (not from reducers/actions of other types)
 export const setError = (error: string): any => {
   return async (dispatch: ThunkDispatch<{}, {}, SetError>) => {
     dispatch({

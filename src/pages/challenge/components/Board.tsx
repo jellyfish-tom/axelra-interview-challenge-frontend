@@ -20,7 +20,7 @@ const Container = styled.div`
 const ListsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const Board = (props: { fetchTodos: FetchTodos }) => {
