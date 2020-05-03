@@ -24,16 +24,13 @@ export type AddTodoFailure = {
 
 export type FetchTodosRequest = {
   type: ActionTypes.FETCH_TODOS_REQUEST;
-  loading: boolean;
 };
 export type FetchTodosSuccess = {
   type: ActionTypes.FETCH_TODOS_SUCCESS;
   todos: Todo[];
-  loading: boolean;
 };
 export type FetchTodosFailure = {
   type: ActionTypes.FETCH_TODOS_FAILURE;
-  loading: boolean;
   error: string;
 };
 

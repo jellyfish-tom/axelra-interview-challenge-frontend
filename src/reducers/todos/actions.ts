@@ -34,7 +34,6 @@ export const fetchTodos = (): any => {
   ) => {
     dispatch({
       type: ActionTypes.FETCH_TODOS_REQUEST,
-      loading: true,
     });
 
     try {
@@ -49,20 +48,17 @@ export const fetchTodos = (): any => {
         dispatch({
           type: ActionTypes.FETCH_TODOS_SUCCESS,
           todos,
-          loading: false,
         });
       } else {
         dispatch({
           type: ActionTypes.FETCH_TODOS_FAILURE,
           error: response.statusText,
-          loading: false,
         });
       }
     } catch (error) {
       dispatch({
         type: ActionTypes.FETCH_TODOS_FAILURE,
         error: "Sorry, can't talk to our servers right now.",
-        loading: false,
       });
     }
   };
@@ -80,21 +76,29 @@ export const addTodo = (todo: PostableTodo): any => {
       type: ActionTypes.ADD_TODO_REQUEST,
     });
 
-    fetch(`${api.todos.list}`, HTTP_OPTIONS(PROTOCOL_METHOD.POST, todo))
-      .then((res: any) => res.json())
-      .then((todo: Todo) => {
+    try {
+      const response = await fetch(
+        `${api.todos.list}`,
+        HTTP_OPTIONS(PROTOCOL_METHOD.POST, todo)
+      );
+
+      if (response.ok) {
         dispatch({
           type: ActionTypes.ADD_TODO_SUCCESS,
         });
-
         dispatch(fetchTodos());
-      })
-      .catch((error: string) => {
+      } else {
         dispatch({
           type: ActionTypes.ADD_TODO_FAILURE,
-          error,
+          error: response.statusText,
         });
+      }
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.ADD_TODO_FAILURE,
+        error: "Sorry, can't talk to our servers right now.",
       });
+    }
   };
 };
 

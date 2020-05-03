@@ -40,8 +40,8 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
     <Container>
       <TodosControls></TodosControls>
       <ListsContainer>
-        {!todos.loading ? ( // TODO: cos tu nie gra z tym loadingiem
-          <Spinner color={__COLORS.SECONDARY}></Spinner> // TODO: adjust position of loader
+        {todos.loading ? (
+          <Spinner color={__COLORS.SECONDARY}></Spinner>
         ) : (
           <>
             <TodosList

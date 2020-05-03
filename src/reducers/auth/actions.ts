@@ -21,23 +21,30 @@ export const login = (email: string, password: string): any => {
     dispatch({ type: ActionTypes.LOGIN_REQUEST });
 
     try {
-      fetch(
+      const response = await fetch(
         api.auth.login,
         HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
-      )
-        .then((res) => res.json())
-        .then((user) => {
-          localStorage.setItem('user', JSON.stringify(user));
-          dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
-          window.location.reload(true);
-        })
-        .catch((error: string) => {
-          dispatch({
-            type: ActionTypes.LOGIN_FAILURE,
-            error,
-          });
+      );
+
+      if (response.ok) {
+        const user = await response.json();
+
+        localStorage.setItem('user', JSON.stringify(user));
+        dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
+
+        window.location.reload(true);
+      } else {
+        dispatch({
+          type: ActionTypes.LOGIN_FAILURE,
+          error: response.statusText,
         });
-    } catch (e) {}
+      }
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.LOGIN_FAILURE,
+        error: "Sorry, can't talk to our servers right now.",
+      });
+    }
   };
 };
 
@@ -51,21 +58,30 @@ export const logout = (): any => {
   ) => {
     dispatch({ type: ActionTypes.LOGOUT_REQUEST });
 
-    fetch(api.auth.logout, HTTP_OPTIONS(PROTOCOL_METHOD.GET))
-      .then((res) => res.json())
-      .then((_) => {
+    try {
+      const response = await fetch(
+        api.auth.logout,
+        HTTP_OPTIONS(PROTOCOL_METHOD.GET)
+      );
+
+      if (response.ok) {
         dispatch({
           type: ActionTypes.LOGOUT_SUCCESS,
         });
         localStorage.removeItem('user');
         window.location.reload(true);
-      })
-      .catch((error: string) => {
+      } else {
         dispatch({
-          error,
+          error: response.statusText,
           type: ActionTypes.LOGOUT_FAILURE,
         });
+      }
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.LOGOUT_FAILURE,
+        error: "Sorry, can't talk to our servers right now.",
       });
+    }
   };
 };
 
@@ -79,26 +95,42 @@ export const register = (email: string, password: string): any => {
   ) => {
     dispatch({ type: ActionTypes.REGISTER_REQUEST });
 
-    fetch(
-      api.auth.register,
-      HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
-    )
-      .then((res) => res.json())
-      .then((response) => {
-        const { user } = response;
+    try {
+      const response = await fetch(
+        api.auth.register,
+        HTTP_OPTIONS(PROTOCOL_METHOD.POST, JSON.stringify({ email, password }))
+      );
+
+      if (response.ok) {
+        const user = await response.json();
 
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          dispatch({ type: ActionTypes.REGISTER_SUCCESS, user });
+
+          dispatch({
+            type: ActionTypes.REGISTER_SUCCESS,
+            user,
+          });
+
           window.location.reload(true);
+        } else {
+          dispatch({
+            type: ActionTypes.REGISTER_FAILURE,
+            error: 'Sorry something went wrong...',
+          });
         }
-      })
-      .catch((error: string) => {
+      } else {
         dispatch({
-          error,
           type: ActionTypes.REGISTER_FAILURE,
+          error: response.statusText,
         });
+      }
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.REGISTER_FAILURE,
+        error: "Sorry, can't talk to our servers right now.",
       });
+    }
   };
 };
 

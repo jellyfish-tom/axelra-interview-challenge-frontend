@@ -11,7 +11,7 @@ import {
 
 const initialState: TodoState = {
   todos: [],
-  loading: false,
+  loading: true,
   adding: false,
 };
 
@@ -28,16 +28,18 @@ export const todoReducer = () => {
   ) => {
     switch (action.type) {
       case ActionTypes.FETCH_TODOS_REQUEST:
-        return { ...state, loading: action.loading };
+        return { ...state, loading: true };
       case ActionTypes.FETCH_TODOS_SUCCESS:
         return {
           ...state,
           todos: action.todos,
+          loading: false,
         };
       case ActionTypes.FETCH_TODOS_FAILURE:
         return {
           ...state,
           error: action.error,
+          loading: false,
         };
       case ActionTypes.ADD_TODO_REQUEST:
         return {
