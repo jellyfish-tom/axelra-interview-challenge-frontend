@@ -10,7 +10,7 @@ import {
 } from './types';
 import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
-import { Todo, PostableTodo } from '../../model/Todo';
+import { PostableTodo } from '../../model/Todo';
 
 const getUidQueryParam = (uid: string) => {
   return `?${new URLSearchParams({

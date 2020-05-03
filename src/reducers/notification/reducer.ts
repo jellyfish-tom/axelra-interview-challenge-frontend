@@ -1,7 +1,5 @@
 import { ActionTypes, NotificationState } from './types';
 
-import { HideNotification } from './actions';
-
 export const initialState: NotificationState = {
   error: null,
   isOpen: false,

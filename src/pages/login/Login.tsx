@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { login, Login, register, Register } from '../../reducers/auth/actions';
 import { __GRAY_SCALE } from '../../layout/Theme';
+import { ActionTypes } from '../../reducers/auth/types';
 
 const Title = styled.h1`
   font-size: 32px;
@@ -19,11 +20,23 @@ const CallToAction = styled.span`
   hover: pointer;
 `;
 
+const useCleanUserState = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: ActionTypes.LOGOUT_SUCCESS,
+    });
+  }, [dispatch]);
+};
+
 const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
   const { login, register } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [registrationEnabled, setRegistrationEnabled] = useState(false);
+
+  useCleanUserState();
 
   const onLogin = () => {
     login(email, password);

@@ -65,9 +65,6 @@ export const logout = (): any => {
       );
 
       if (response.ok) {
-        dispatch({
-          type: ActionTypes.LOGOUT_SUCCESS,
-        });
         localStorage.removeItem('user');
         window.location.reload(true);
       } else {

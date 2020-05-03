@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect, useSelector } from 'react-redux';
 import { RootState } from '../reducers/store';
-import { ActionTypes, NotificationState } from '../reducers/notification/types';
+import { NotificationState } from '../reducers/notification/types';
 import {
   hideNotification,
   HideNotification,

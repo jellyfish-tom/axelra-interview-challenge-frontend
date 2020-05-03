@@ -71,7 +71,7 @@ export const authReducer = () => {
           ...state,
           logging: false,
           logged: false,
-          user: null,
+          user: UnloggedUser,
         };
       case ActionTypes.LOGOUT_FAILURE:
         return {
