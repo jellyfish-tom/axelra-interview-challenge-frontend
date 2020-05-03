@@ -19,4 +19,8 @@ export const Button = styled.button`
   cursor: pointer;
   outline: none;
   margin-right: 3px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 `;

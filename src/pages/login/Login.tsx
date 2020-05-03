@@ -11,9 +11,7 @@ const Title = styled.h1`
 `;
 
 const Container = styled.div`
-  border: 1px solid ${__GRAY_SCALE._200};
   padding: 1em;
-  border-radius: 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,6 +21,11 @@ const CallToAction = styled.span`
   color: blue;
   hover: pointer;
   margin: 10px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  cursor: pointer;
 `;
 
 const LoginInput = styled(Input)`
@@ -30,7 +33,7 @@ const LoginInput = styled(Input)`
 `;
 
 const LoginButton = styled(Button)`
-  margin: 10px;
+  margin: 20px 0px 10px 0px;
 `;
 
 const useCleanUserState = () => {
@@ -79,11 +82,11 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
         {registrationEnabled ? 'Register' : 'Login'}
       </LoginButton>
       {registrationEnabled ? (
-        <CallToAction onClick={onToggleRegistration}>
+        <CallToAction unselectable="on" onClick={onToggleRegistration}>
           Go back to Login
         </CallToAction>
       ) : (
-        <CallToAction onClick={onToggleRegistration}>
+        <CallToAction unselectable="on" onClick={onToggleRegistration}>
           Not registered yet?
         </CallToAction>
       )}

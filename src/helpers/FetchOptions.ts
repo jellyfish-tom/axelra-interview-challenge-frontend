@@ -11,7 +11,6 @@ export const HTTP_OPTIONS = (method: PROTOCOL_METHOD, body?: any) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    // mode: 'cors' as 'cors' | 'same-origin' | 'navigate' | 'no-cors' | undefined,
     credentials: 'include' as 'include' | 'omit' | 'same-origin' | undefined,
     body: body ? JSON.stringify(body) : null,
   };

@@ -36,13 +36,13 @@ export const login = (email: string, password: string): any => {
       } else {
         dispatch({
           type: ActionTypes.LOGIN_FAILURE,
-          error: response.statusText,
+          error: (await response.json()).message,
         });
       }
     } catch (e) {
       dispatch({
         type: ActionTypes.LOGIN_FAILURE,
-        error: "Sorry, can't talk to our servers right now.",
+        error: 'Sorry, our servers are currently out of office. Try later.',
       });
     }
   };
@@ -69,14 +69,14 @@ export const logout = (): any => {
         window.location.reload(true);
       } else {
         dispatch({
-          error: response.statusText,
+          error: (await response.json()).message,
           type: ActionTypes.LOGOUT_FAILURE,
         });
       }
     } catch (e) {
       dispatch({
         type: ActionTypes.LOGOUT_FAILURE,
-        error: "Sorry, can't talk to our servers right now.",
+        error: 'Sorry, our servers are currently out of office. Try later.',
       });
     }
   };
@@ -99,7 +99,7 @@ export const register = (email: string, password: string): any => {
       );
 
       if (response.ok) {
-        const user = await response.json();
+        const user = (await response.json()).user;
 
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
@@ -113,19 +113,19 @@ export const register = (email: string, password: string): any => {
         } else {
           dispatch({
             type: ActionTypes.REGISTER_FAILURE,
-            error: 'Sorry something went wrong...',
+            error: (await response.json()).message,
           });
         }
       } else {
         dispatch({
           type: ActionTypes.REGISTER_FAILURE,
-          error: response.statusText,
+          error: (await response.json()).message,
         });
       }
     } catch (e) {
       dispatch({
         type: ActionTypes.REGISTER_FAILURE,
-        error: "Sorry, can't talk to our servers right now.",
+        error: 'Sorry, our servers are currently out of office. Try later.',
       });
     }
   };

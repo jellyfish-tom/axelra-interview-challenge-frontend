@@ -46,13 +46,13 @@ export const fetchTodos = (uid: string): any => {
       } else {
         dispatch({
           type: ActionTypes.FETCH_TODOS_FAILURE,
-          error: response.statusText,
+          error: (await response.json()).message,
         });
       }
     } catch (error) {
       dispatch({
         type: ActionTypes.FETCH_TODOS_FAILURE,
-        error: "Sorry, can't talk to our servers right now.",
+        error: 'Sorry, our servers are currently out of office. Try later.',
       });
     }
   };
@@ -84,13 +84,13 @@ export const addTodo = (todo: PostableTodo): any => {
       } else {
         dispatch({
           type: ActionTypes.ADD_TODO_FAILURE,
-          error: response.statusText,
+          error: (await response.json()).message,
         });
       }
     } catch (e) {
       dispatch({
         type: ActionTypes.ADD_TODO_FAILURE,
-        error: "Sorry, can't talk to our servers right now.",
+        error: 'Sorry, our servers are currently out of office. Try later.',
       });
     }
   };
