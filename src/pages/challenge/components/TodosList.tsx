@@ -39,9 +39,7 @@ const UnconnectedTodosList = (props: {
   };
 
   const onRemove = (todo: Todo) => {
-    removeTodo({
-      _id: todo._id,
-    });
+    removeTodo(todo);
   };
 
   return (

@@ -3,6 +3,12 @@ import {
   AddTodoRequest,
   AddTodoSuccess,
   AddTodoFailure,
+  UpdateTodoRequest,
+  UpdateTodoSuccess,
+  UpdateTodoFailure,
+  RemoveTodoRequest,
+  RemoveTodoSuccess,
+  RemoveTodoFailure,
   FetchTodosRequest,
   FetchTodosSuccess,
   FetchTodosFailure,
@@ -25,8 +31,16 @@ export const todoReducer = () => {
       | AddTodoRequest
       | AddTodoSuccess
       | AddTodoFailure
+      | UpdateTodoRequest
+      | UpdateTodoSuccess
+      | UpdateTodoFailure
+      | RemoveTodoRequest
+      | RemoveTodoSuccess
+      | RemoveTodoFailure
   ) => {
     switch (action.type) {
+      /********FETCH TODOS********/
+
       case ActionTypes.FETCH_TODOS_REQUEST:
         return { ...state, loading: true };
       case ActionTypes.FETCH_TODOS_SUCCESS:
@@ -41,6 +55,9 @@ export const todoReducer = () => {
           error: action.error,
           loading: false,
         };
+
+      /********ADD TODO********/
+
       case ActionTypes.ADD_TODO_REQUEST:
         return {
           ...state,
@@ -49,6 +66,29 @@ export const todoReducer = () => {
       case ActionTypes.ADD_TODO_SUCCESS:
         return { ...state, adding: false };
       case ActionTypes.ADD_TODO_FAILURE:
+        return { ...state, adding: false, error: action.error };
+
+      /********REMOVE TODO********/
+
+      case ActionTypes.REMOVE_TODO_REQUEST:
+        return {
+          ...state,
+        };
+      case ActionTypes.REMOVE_TODO_SUCCESS:
+        return { ...state, loading: false, success: action.success };
+      case ActionTypes.REMOVE_TODO_FAILURE:
+        return { ...state, adding: false, error: action.error };
+
+      /********UPDATE TODO********/
+
+      case ActionTypes.UPDATE_TODO_REQUEST:
+        return {
+          ...state,
+          loading: true,
+        };
+      case ActionTypes.UPDATE_TODO_SUCCESS:
+        return { ...state, loading: false };
+      case ActionTypes.UPDATE_TODO_FAILURE:
         return { ...state, adding: false, error: action.error };
       default:
         return state;

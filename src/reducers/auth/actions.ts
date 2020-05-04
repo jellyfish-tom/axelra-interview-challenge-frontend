@@ -42,7 +42,7 @@ export const login = (email: string, password: string): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.LOGIN_FAILURE,
-        error: 'Sorry, our servers are currently out of office. Try later.',
+        error: 'Ouuch! There has been some error, sorry!',
       });
     }
   };
@@ -76,7 +76,7 @@ export const logout = (): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.LOGOUT_FAILURE,
-        error: 'Sorry, our servers are currently out of office. Try later.',
+        error: 'Ouuch! There has been some error, sorry!',
       });
     }
   };
@@ -125,7 +125,7 @@ export const register = (email: string, password: string): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.REGISTER_FAILURE,
-        error: 'Sorry, our servers are currently out of office. Try later.',
+        error: 'Ouuch! There has been some error, sorry!',
       });
     }
   };

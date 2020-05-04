@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { __ALERTS, __GRAY_SCALE } from '../../../layout/Theme';
-import { Todo, POSSIBLE_TODO_STATES } from '../../../model/Todo';
+import { Todo } from '../../../model/Todo';
 import { IconActionButton } from '../../../layout/UI/Components';
 import remove from '../../../assets/remove.svg';
 import complete from '../../../assets/complete.svg';
@@ -43,12 +43,6 @@ export const TodosListItem = (props: {
     onRemove(todo);
   };
 
-  const getPossibleNextStates = () => {
-    return POSSIBLE_TODO_STATES.filter(
-      (state) => Boolean(state.value) !== Boolean(todo.completed)
-    );
-  };
-
   const getTodoStateButtonTheme = () => {
     const color = todo.completed ? __ALERTS.INFO : __ALERTS.SUCCESS;
 
@@ -63,13 +57,17 @@ export const TodosListItem = (props: {
         theme={getTodoStateButtonTheme()}
         onClick={onChangeCategoryClick}
       >
-        {todo.completed ? <img src={progress} /> : <img src={complete} />}
+        {todo.completed ? (
+          <img alt="progress" src={progress} />
+        ) : (
+          <img alt="completed" src={complete} />
+        )}
       </IconActionButton>
       <IconActionButton
         theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
         onClick={onRemoveTodoClick}
       >
-        <img src={remove} />
+        <img alt="remove" src={remove} />
       </IconActionButton>
     </TodoListItem>
   );

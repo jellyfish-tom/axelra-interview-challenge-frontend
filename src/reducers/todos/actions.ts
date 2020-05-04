@@ -7,10 +7,16 @@ import {
   AddTodoRequest,
   AddTodoFailure,
   AddTodoSuccess,
+  RemoveTodoRequest,
+  RemoveTodoSuccess,
+  RemoveTodoFailure,
+  UpdateTodoRequest,
+  UpdateTodoSuccess,
+  UpdateTodoFailure,
 } from './types';
 import { api } from '../../helpers/api';
 import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
-import { PostableTodo } from '../../model/Todo';
+import { PostableTodo, Todo } from '../../model/Todo';
 
 const getUidQueryParam = (uid: string) => {
   return `?${new URLSearchParams({
@@ -52,7 +58,7 @@ export const fetchTodos = (uid: string): any => {
     } catch (error) {
       dispatch({
         type: ActionTypes.FETCH_TODOS_FAILURE,
-        error: 'Sorry, our servers are currently out of office. Try later.',
+        error: 'Ouuch! There has been some error, sorry!',
       });
     }
   };
@@ -79,6 +85,7 @@ export const addTodo = (todo: PostableTodo): any => {
       if (response.ok) {
         dispatch({
           type: ActionTypes.ADD_TODO_SUCCESS,
+          success: 'Message added successfully',
         });
         dispatch(fetchTodos(todo.uid));
       } else {
@@ -90,7 +97,88 @@ export const addTodo = (todo: PostableTodo): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.ADD_TODO_FAILURE,
-        error: 'Sorry, our servers are currently out of office. Try later.',
+        error: 'Ouuch! There has been some error, sorry!',
+      });
+    }
+  };
+};
+
+export const updateTodo = (todo: Todo): any => {
+  return async (
+    dispatch: ThunkDispatch<
+      {},
+      {},
+      UpdateTodoRequest | UpdateTodoSuccess | UpdateTodoFailure
+    >
+  ) => {
+    dispatch({
+      type: ActionTypes.UPDATE_TODO_REQUEST,
+    });
+
+    try {
+      const response = await fetch(
+        `${api.todos.list}/${todo._id}`,
+        HTTP_OPTIONS(PROTOCOL_METHOD.PUT, todo)
+      );
+
+      if (response.ok) {
+        dispatch({
+          type: ActionTypes.UPDATE_TODO_SUCCESS,
+          success: 'Message updated successfully',
+        });
+
+        dispatch(fetchTodos(todo.uid));
+      } else {
+        dispatch({
+          type: ActionTypes.UPDATE_TODO_FAILURE,
+          error: (await response.json()).message,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      dispatch({
+        type: ActionTypes.UPDATE_TODO_FAILURE,
+        error: 'Ouuch! There has been some error, sorry!',
+      });
+    }
+  };
+};
+
+export const removeTodo = (todo: Todo): any => {
+  return async (
+    dispatch: ThunkDispatch<
+      {},
+      {},
+      RemoveTodoRequest | RemoveTodoSuccess | RemoveTodoFailure
+    >
+  ) => {
+    dispatch({
+      type: ActionTypes.REMOVE_TODO_REQUEST,
+    });
+
+    try {
+      const response = await fetch(
+        `${api.todos.list}/${todo._id}`,
+        HTTP_OPTIONS(PROTOCOL_METHOD.DELETE)
+      );
+
+      if (response.ok) {
+        dispatch({
+          type: ActionTypes.REMOVE_TODO_SUCCESS,
+          success: 'Message removed successfully',
+        });
+
+        dispatch(fetchTodos(todo.uid));
+      } else {
+        dispatch({
+          type: ActionTypes.REMOVE_TODO_FAILURE,
+          error: (await response.json()).message,
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: ActionTypes.REMOVE_TODO_FAILURE,
+        error: 'Ouuch! There has been some error, sorry!',
       });
     }
   };
@@ -98,3 +186,5 @@ export const addTodo = (todo: PostableTodo): any => {
 
 export type FetchTodos = typeof fetchTodos;
 export type AddTodo = typeof addTodo;
+export type UpdateTodo = typeof updateTodo;
+export type RemoveTodo = typeof removeTodo;

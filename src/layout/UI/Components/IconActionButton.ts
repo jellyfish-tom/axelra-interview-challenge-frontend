@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { border, color, background } from './utils';
+import { border, background } from './utils';
 import { Button } from './Button';
 
 export const IconActionButton = styled(Button)`
