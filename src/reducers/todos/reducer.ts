@@ -77,19 +77,18 @@ export const todoReducer = () => {
       case ActionTypes.REMOVE_TODO_SUCCESS:
         return { ...state, loading: false, success: action.success };
       case ActionTypes.REMOVE_TODO_FAILURE:
-        return { ...state, adding: false, error: action.error };
+        return { ...state, loading: false, error: action.error };
 
       /********UPDATE TODO********/
 
       case ActionTypes.UPDATE_TODO_REQUEST:
         return {
           ...state,
-          loading: true,
         };
       case ActionTypes.UPDATE_TODO_SUCCESS:
         return { ...state, loading: false };
       case ActionTypes.UPDATE_TODO_FAILURE:
-        return { ...state, adding: false, error: action.error };
+        return { ...state, loading: false, error: action.error };
       default:
         return state;
     }

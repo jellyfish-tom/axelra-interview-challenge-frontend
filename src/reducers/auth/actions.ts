@@ -104,10 +104,10 @@ export const register = (email: string, password: string): any => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
 
-          dispatch({
-            type: ActionTypes.REGISTER_SUCCESS,
-            user,
-          });
+          // dispatch({
+          //   type: ActionTypes.REGISTER_SUCCESS,
+          //   user,
+          // });
 
           window.location.reload(true);
         } else {

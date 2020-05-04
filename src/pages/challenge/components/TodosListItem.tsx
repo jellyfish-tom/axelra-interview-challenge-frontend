@@ -1,18 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { __ALERTS, __GRAY_SCALE } from '../../../layout/Theme';
+import { __ALERTS, __COLORS } from '../../../layout/Theme';
 import { Todo } from '../../../model/Todo';
-import {
-  IconActionButton,
-  Image,
-  AssetType,
-} from '../../../layout/UI/Components';
+import { IconActionButton } from '../../../layout/UI/Components';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 const TodoListItem = styled.div`
-  border: 1px solid ${__GRAY_SCALE._200};
+  background: ${__COLORS.WHITE};
   padding: 0.5em;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 0.2em;
+  font-size: 0.9em;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,21 +19,17 @@ const TodoListItem = styled.div`
   margin: 0.5em 0;
 `;
 
-const Index = styled.span`
-  margin: 0 0.5em;
-`;
-
 const Title = styled.span`
   flex: 1;
+  padding-right: 0.5em;
 `;
 
 export const TodosListItem = (props: {
   todo: Todo;
-  index: number;
   onStateChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
 }) => {
-  const { todo, index, onStateChange, onRemove } = props;
+  const { todo, onStateChange, onRemove } = props;
 
   const onChangeCategoryClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onStateChange(todo);
@@ -52,23 +47,19 @@ export const TodosListItem = (props: {
 
   return (
     <TodoListItem>
-      <Index>{index}.</Index>
       <Title>{todo.title}</Title>
       <IconActionButton
         theme={getTodoStateButtonTheme()}
         onClick={onChangeCategoryClick}
+        style={{ marginRight: '.3em' }}
       >
-        {todo.completed ? (
-          <Image source="progress.svg" assetType={AssetType.ICON} />
-        ) : (
-          <Image source="complete.svg" assetType={AssetType.ICON} />
-        )}
+        {todo.completed ? <ChevronLeftIcon /> : <ChevronRightIcon />}
       </IconActionButton>
       <IconActionButton
         theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
         onClick={onRemoveTodoClick}
       >
-        <Image source="remove.svg" assetType={AssetType.ICON} />
+        <DeleteOutlineIcon />
       </IconActionButton>
     </TodoListItem>
   );

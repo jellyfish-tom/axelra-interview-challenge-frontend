@@ -10,23 +10,25 @@ import { connect, useSelector } from 'react-redux';
 import { TodoStatesDropdown, DropdownItem } from './TodoStatesDropdown';
 import { RootState } from '../../../reducers/store';
 import { AuthState } from '../../../reducers/auth/types';
-import { TodoState } from '../../../reducers/todos/types';
 import { Button, Input } from '../../../layout/UI/Components';
-import { Spinner } from '../../../layout/UI/Spinners/Spinner';
-import { __COLORS } from '../../../layout/Theme';
 
 const Form = styled.form`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1em;
+  height: 2em;
+`;
+
+const TodoDescriptionInput = styled(Input)`
+  flex: 1;
 `;
 
 const UnconnectedTodosControls = (props: {
   addTodo: AddTodo;
   setNotification: SetNotification;
 }) => {
-  const { auth, todos }: { auth: AuthState; todos: TodoState } = useSelector(
+  const { auth }: { auth: AuthState } = useSelector(
     (state: RootState) => state
   );
   const todoNeutralState = { value: -1, label: 'Pick state' };
@@ -70,26 +72,20 @@ const UnconnectedTodosControls = (props: {
   };
 
   return (
-    <>
-      {todos.adding ? (
-        <Spinner color={__COLORS.SECONDARY}></Spinner>
-      ) : (
-        <Form onSubmit={onFormSubmit}>
-          <Input
-            placeholder="Add description of your todo here"
-            ref={(node: HTMLInputElement) => {
-              if (node) input = node;
-            }}
-          />
-          <TodoStatesDropdown
-            initialState={todoNeutralState}
-            onClick={onMenuItemClick}
-            items={POSSIBLE_TODO_STATES}
-          ></TodoStatesDropdown>
-          <Button type="submit">Add Todo</Button>
-        </Form>
-      )}
-    </>
+    <Form onSubmit={onFormSubmit}>
+      <TodoDescriptionInput
+        placeholder="Add description of your todo here"
+        ref={(node: HTMLInputElement) => {
+          if (node) input = node;
+        }}
+      />
+      <TodoStatesDropdown
+        initialState={todoNeutralState}
+        onClick={onMenuItemClick}
+        items={POSSIBLE_TODO_STATES}
+      ></TodoStatesDropdown>
+      <Button type="submit">Add Todo</Button>
+    </Form>
   );
 };
 

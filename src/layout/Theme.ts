@@ -49,6 +49,9 @@ export const GlobalStyle = createGlobalStyle<{
   theme: ThemeProviderProps<any>;
 }>`
   @import url(${MainTheme.googleUrl});
+  * {
+    box-sizing: border-box;
+  }
   html {
     font-family: ${(p: ThemeProviderProps<any>) => p.theme.fontFamily};
   }
@@ -64,7 +67,7 @@ export const GlobalStyle = createGlobalStyle<{
     outline: none;
   }
   h1, h2, h3, h4, h5, h6, p {
-    color: ${__COLORS.PRIMARY};
+    color: ${__GRAY_SCALE._700};
     font-weight: 100;
     line-height: 1.4;
   }
@@ -77,4 +80,5 @@ export const GlobalStyle = createGlobalStyle<{
     word-break: break-word;
     line-height: 1.4;
   }
+  
 `;

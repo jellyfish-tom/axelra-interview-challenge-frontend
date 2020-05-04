@@ -5,20 +5,18 @@ import { RootState } from '../reducers/store';
 import { AuthState } from '../reducers/auth/types';
 import { logout, Logout } from '../reducers/auth/actions';
 import { Button } from '../layout/UI/Components/Button';
+import { __GRAY_SCALE } from '../layout/Theme';
 
 const Container = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  height: 50px;
-  padding: 10px;
+  height: 3em;
   display: flex;
   flex-direction: row;
   align-items: center;
 `;
 
 const LoggedInAs = styled.span`
-  margin-right: 5px;
+  margin-right: 0.5em;
+  color: ${__GRAY_SCALE._800};
 `;
 
 const UnconnectedUserMenu = (props: { logout: Logout }) => {

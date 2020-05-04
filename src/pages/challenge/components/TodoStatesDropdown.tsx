@@ -11,16 +11,17 @@ const DropDownContent = styled.div`
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  min-width: 10em;
+  box-shadow: 0px 0.5em 1em 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
 `;
 
 const DropDownLi = styled(StyledLi)`
   display: inline-block;
   cursor: pointer;
+  margin-right: 0.5em;
 
   &:hover ${DropDownContent} {
     display: block;
@@ -29,11 +30,11 @@ const DropDownLi = styled(StyledLi)`
 
 const Item = styled.a`
   color: black;
-  padding: 12px 16px;
+  padding: 0.7em 1em;
   text-decoration: none;
   display: block;
   text-align: left;
-  font-size: 14px;
+  font-size: 0.9em;
 
   &:hover {
     background-color: #f1f1f1;

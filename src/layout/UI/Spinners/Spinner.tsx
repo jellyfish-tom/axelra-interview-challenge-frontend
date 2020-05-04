@@ -17,6 +17,13 @@ const Grid = styled.div<{ color: __COLORS }>`
   position: relative;
   width: 64px;
   height: 64px;
+  margin: 0 auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-self: center;
+
   & div {
     position: absolute;
     width: 13px;

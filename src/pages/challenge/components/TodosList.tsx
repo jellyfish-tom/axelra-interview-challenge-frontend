@@ -7,21 +7,43 @@ import {
   removeTodo,
   RemoveTodo,
 } from '../../../reducers/todos/actions';
-import { Image, AssetType } from '../../../layout/UI/Components';
 import { Todo } from '../../../model/Todo';
 import { TodosListItem } from './TodosListItem';
+import empty from '../../../assets/empty.svg';
+import { __GRAY_SCALE, __COLORS } from '../../../layout/Theme';
 
-const EmptyListImg = styled(Image)`
-  margin: 40px auto 30px;
+const EmptyListImg = styled.img`
+  margin: 3em auto 2em;
   width: fit-content;
   display: flex;
 `;
 
 const TodoList = styled.div`
   flex: 1;
+  background: ${__COLORS.PRIMARY};
+  border-radius: 0.3em;
+  padding: 0.5em;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 100%;
+
+  &:not(:last-child) {
+    margin-right: 1em;
+  }
 `;
 
-const ListHeader = styled.h1``;
+const ListHeader = styled.h4`
+  font-weight: bold;
+  color: ${__GRAY_SCALE._600};
+  margin: 0 !important;
+`;
+
+const ItemsContainer = styled.div`
+  height: calc(100% - 1em);
+  overflow-y: scroll;
+  margin-right: -2em;
+  padding-right: 1.1em;
+`;
 
 const UnconnectedTodosList = (props: {
   todos: Todo[];
@@ -45,19 +67,20 @@ const UnconnectedTodosList = (props: {
   return (
     <TodoList>
       <ListHeader>{header}</ListHeader>
-      {todos.length > 0 ? (
-        todos.map((todo, index) => (
-          <TodosListItem
-            index={index}
-            key={todo._id}
-            todo={todo}
-            onStateChange={onStateChange}
-            onRemove={onRemove}
-          ></TodosListItem>
-        ))
-      ) : (
-        <EmptyListImg source={'empty.svg'} assetType={AssetType.IMAGE} />
-      )}
+      <ItemsContainer>
+        {todos.length > 0 ? (
+          todos.map((todo, index) => (
+            <TodosListItem
+              key={todo._id}
+              todo={todo}
+              onStateChange={onStateChange}
+              onRemove={onRemove}
+            ></TodosListItem>
+          ))
+        ) : (
+          <EmptyListImg src={empty} />
+        )}
+      </ItemsContainer>
     </TodoList>
   );
 };

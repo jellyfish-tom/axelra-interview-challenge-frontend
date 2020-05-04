@@ -11,7 +11,7 @@ import { __COLORS } from '../../layout/Theme';
 import { BounceIn } from '../../layout/UI/Animations/BounceIn';
 
 const Title = styled.h1`
-  font-size: 32px;
+  font-size: 2em;
 `;
 
 const Container = styled.div`
@@ -25,7 +25,7 @@ const Container = styled.div`
 const CallToAction = styled.span`
   color: blue;
   hover: pointer;
-  margin: 10px;
+  margin: 0.7em;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -34,11 +34,12 @@ const CallToAction = styled.span`
 `;
 
 const LoginInput = styled(Input)`
-  margin: 5px;
+  margin: 0.5em;
+  width: 15em;
 `;
 
 const LoginButton = styled(Button)`
-  margin: 20px 0px 10px 0px;
+  margin: 1.3em 0 0.6em 0;
 `;
 
 const useCleanUserState = () => {

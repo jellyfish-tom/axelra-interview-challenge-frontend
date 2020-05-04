@@ -25,16 +25,16 @@ const BackgroundColor = styled.div`
 `;
 
 const Container = styled(BackgroundColor)`
-  min-height: 35px;
-  max-width: 500px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
+  min-height: 2em;
+  max-width: 33em;
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 0.9em;
   left: 0;
   position: absolute;
   right: 0;
-  top: -300px;
+  top: -30em;
   margin: 0 auto;
   transition: top 0.5s;
   background: white;
@@ -47,9 +47,11 @@ const Container = styled(BackgroundColor)`
 
 const Message = styled(BackgroundColor)`
   display: flex;
-  width: calc(100% - 20px);
-  min-height: 35px;
-  padding: 10px;
+  width: 100%;
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
+  min-height: 2.5em;
+  padding: 0.8em;
   color: white;
   box-sizing: border-box;
 `;
