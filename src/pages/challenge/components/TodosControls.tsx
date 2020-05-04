@@ -74,6 +74,7 @@ const UnconnectedTodosControls = (props: {
   return (
     <Form onSubmit={onFormSubmit}>
       <TodoDescriptionInput
+        tabIndex={0}
         placeholder="Add description of your todo here"
         ref={(node: HTMLInputElement) => {
           if (node) input = node;
@@ -84,7 +85,9 @@ const UnconnectedTodosControls = (props: {
         onClick={onMenuItemClick}
         items={POSSIBLE_TODO_STATES}
       ></TodoStatesDropdown>
-      <Button type="submit">Add Todo</Button>
+      <Button type="submit" tabIndex={2}>
+        Add Todo
+      </Button>
     </Form>
   );
 };

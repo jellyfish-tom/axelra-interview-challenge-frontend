@@ -20,6 +20,7 @@ import { PostableTodo, Todo } from "../../model/Todo";
 
 const getUidQueryParam = (uid: string) => {
   return `?${new URLSearchParams({
+    //@ts-ignore
     uid,
   })}`;
 };

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { __GRAY_SCALE } from "../../../layout/Theme";
 import { Button } from "../../../layout/UI/Components/Button";
 
 const StyledLi = styled.li`
@@ -23,7 +22,7 @@ const DropDownLi = styled(StyledLi)`
   cursor: pointer;
   margin-right: 0.5em;
 
-  &:hover ${DropDownContent} {
+  &:hover ${DropDownContent}, &:focus ${DropDownContent} {
     display: block;
   }
 `;
@@ -39,10 +38,6 @@ const Item = styled.a`
 
   &:hover {
     background-color: #e6e6e6;
-  }
-
-  &:first-child {
-    border-bottom: 1px solid ${__GRAY_SCALE._400};
   }
 `;
 
@@ -65,9 +60,9 @@ export const TodoStatesDropdown = (props: {
   };
 
   return (
-    <DropDownLi>
+    <DropDownLi tabIndex={1}>
       <Button
-        onClick={(e) => {
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();
         }}
       >
