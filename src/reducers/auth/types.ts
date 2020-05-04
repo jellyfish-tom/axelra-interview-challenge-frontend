@@ -56,5 +56,5 @@ export type RegisterFailure = {
 export type AuthState = {
   user: User;
   logged: boolean;
-  logging: boolean;
+  loading: boolean;
 };

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { login, Login, register, Register } from '../../reducers/auth/actions';
 import { ActionTypes } from '../../reducers/auth/types';
 import { Button, Input } from '../../layout/UI/Components';
+import { RootState } from '../../reducers/store';
+import { AuthState } from '../../reducers/auth/types';
+import { Spinner } from '../../layout/UI/Spinners/Spinner';
+import { __COLORS } from '../../layout/Theme';
 
 const Title = styled.h1`
   font-size: 32px;
@@ -46,6 +50,9 @@ const useCleanUserState = () => {
 };
 
 const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
+  const { auth }: { auth: AuthState } = useSelector(
+    (state: RootState) => state
+  );
   const { login, register } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -68,26 +75,32 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
   return (
     <Container>
       <Title>Axelera Challenge Login</Title>
-      <LoginInput
-        placeholder="email"
-        onChange={(e: any) => setEmail(e.target.value)}
-      ></LoginInput>
-      <LoginInput
-        placeholder="password"
-        type="password"
-        onChange={(e: any) => setPassword(e.target.value)}
-      ></LoginInput>
-      <LoginButton onClick={registrationEnabled ? onRegister : onLogin}>
-        {registrationEnabled ? 'Register' : 'Login'}
-      </LoginButton>
-      {registrationEnabled ? (
-        <CallToAction unselectable="on" onClick={onToggleRegistration}>
-          Go back to Login
-        </CallToAction>
+      {auth.loading ? (
+        <Spinner color={__COLORS.SECONDARY}></Spinner>
       ) : (
-        <CallToAction unselectable="on" onClick={onToggleRegistration}>
-          Not registered yet?
-        </CallToAction>
+        <>
+          <LoginInput
+            placeholder="email"
+            onChange={(e: any) => setEmail(e.target.value)}
+          ></LoginInput>
+          <LoginInput
+            placeholder="password"
+            type="password"
+            onChange={(e: any) => setPassword(e.target.value)}
+          ></LoginInput>
+          <LoginButton onClick={registrationEnabled ? onRegister : onLogin}>
+            {registrationEnabled ? 'Register' : 'Login'}
+          </LoginButton>
+          {registrationEnabled ? (
+            <CallToAction unselectable="on" onClick={onToggleRegistration}>
+              Go back to Login
+            </CallToAction>
+          ) : (
+            <CallToAction unselectable="on" onClick={onToggleRegistration}>
+              Not registered yet?
+            </CallToAction>
+          )}
+        </>
       )}
     </Container>
   );

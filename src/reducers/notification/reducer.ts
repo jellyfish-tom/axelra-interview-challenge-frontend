@@ -33,7 +33,7 @@ export const notificationReducer = () => {
         warning,
         isOpen: true,
       };
-    } else if (action.type === ActionTypes.HIDE_ERROR) {
+    } else if (action.type === ActionTypes.CLEAR_NOTIFICATION) {
       return initialState;
     }
 

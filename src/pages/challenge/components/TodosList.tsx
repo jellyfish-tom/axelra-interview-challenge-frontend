@@ -1,5 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import {
+  updateTodo,
+  UpdateTodo,
+  removeTodo,
+  RemoveTodo,
+} from '../../../reducers/todos/actions';
 import { Todo } from '../../../model/Todo';
 import { TodosListItem } from './TodosListItem';
 import empty from '../../../assets/empty.svg';
@@ -16,8 +23,26 @@ const TodoList = styled.div`
 
 const ListHeader = styled.h1``;
 
-export const TodosList = (props: { todos: Todo[]; header: string }) => {
-  const { todos, header } = props;
+const UnconnectedTodosList = (props: {
+  todos: Todo[];
+  header: string;
+  removeTodo: RemoveTodo;
+  updateTodo: UpdateTodo;
+}) => {
+  const { todos, header, removeTodo, updateTodo } = props;
+
+  const onStateChange = (todo: Todo) => {
+    updateTodo({
+      ...todo,
+      completed: !todo.completed,
+    });
+  };
+
+  const onRemove = (todo: Todo) => {
+    removeTodo({
+      _id: todo._id,
+    });
+  };
 
   return (
     <TodoList>
@@ -28,6 +53,8 @@ export const TodosList = (props: { todos: Todo[]; header: string }) => {
             index={index}
             key={todo._id}
             todo={todo}
+            onStateChange={onStateChange}
+            onRemove={onRemove}
           ></TodosListItem>
         ))
       ) : (
@@ -36,3 +63,8 @@ export const TodosList = (props: { todos: Todo[]; header: string }) => {
     </TodoList>
   );
 };
+
+export const TodosList = connect(null, {
+  updateTodo,
+  removeTodo,
+})(UnconnectedTodosList);

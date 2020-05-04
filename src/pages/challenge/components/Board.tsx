@@ -16,6 +16,9 @@ const Container = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
   padding: 1em;
   border-radius: 6px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ListsContainer = styled.div`
@@ -39,23 +42,29 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
 
   return (
     <Container>
-      <TodosControls></TodosControls>
-      <ListsContainer>
-        {todos.loading ? (
-          <Spinner color={__COLORS.SECONDARY}></Spinner>
-        ) : (
-          <>
-            <TodosList
-              header="Tasks in progress"
-              todos={filterTodosByState(todos.todos, false)}
-            ></TodosList>
-            <TodosList
-              header="Completed tasks"
-              todos={filterTodosByState(todos.todos, true)}
-            ></TodosList>
-          </>
-        )}
-      </ListsContainer>
+      {auth.loading ? (
+        <Spinner color={__COLORS.SECONDARY}></Spinner>
+      ) : (
+        <>
+          <TodosControls></TodosControls>
+          <ListsContainer>
+            {todos.loading ? (
+              <Spinner color={__COLORS.SECONDARY}></Spinner>
+            ) : (
+              <>
+                <TodosList
+                  header="Tasks in progress"
+                  todos={filterTodosByState(todos.todos, false)}
+                ></TodosList>
+                <TodosList
+                  header="Completed tasks"
+                  todos={filterTodosByState(todos.todos, true)}
+                ></TodosList>
+              </>
+            )}
+          </ListsContainer>
+        </>
+      )}
     </Container>
   );
 };

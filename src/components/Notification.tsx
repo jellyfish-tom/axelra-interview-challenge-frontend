@@ -86,15 +86,7 @@ const UnconnectedNotification = (props: {
 
       setSlideUpTimeout(_slideUpTimeout);
     }
-  }, [
-    slideUpTimeout,
-    clearNotificationTimeout,
-    clearNotification,
-    error,
-    warning,
-    info,
-    success,
-  ]);
+  }, [error, warning, info, success]);
 
   return (
     <Container className={`${notificationVisible && 'visible'}`}>

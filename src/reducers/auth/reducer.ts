@@ -18,12 +18,12 @@ const localStorageUser = localStorage.getItem('user');
 const initialState: AuthState = localStorageUser
   ? {
       logged: true,
-      logging: false,
+      loading: false,
       user: JSON.parse(localStorageUser),
     }
   : {
       logged: false,
-      logging: false,
+      loading: false,
       user: UnloggedUser,
     };
 
@@ -45,56 +45,56 @@ export const authReducer = () => {
       case ActionTypes.LOGIN_REQUEST:
         return {
           ...state,
-          logging: true,
+          loading: true,
         };
       case ActionTypes.LOGIN_SUCCESS:
         return {
           ...state,
           user: action.user,
           logged: true,
-          logging: false,
+          loading: false,
         };
       case ActionTypes.LOGIN_FAILURE:
         return {
           ...state,
           logged: false,
-          logging: false,
+          loading: false,
           error: action.error,
         };
       case ActionTypes.LOGOUT_REQUEST:
         return {
           ...state,
-          logging: true,
+          loading: true,
         };
       case ActionTypes.LOGOUT_SUCCESS:
         return {
           ...state,
-          logging: false,
+          loading: false,
           logged: false,
           user: UnloggedUser,
         };
       case ActionTypes.LOGOUT_FAILURE:
         return {
           ...state,
-          logging: false,
+          loading: false,
           error: action.error,
         };
       case ActionTypes.REGISTER_REQUEST:
         return {
           ...state,
-          logging: true,
+          loading: true,
         };
       case ActionTypes.REGISTER_SUCCESS:
         return {
           ...state,
-          logging: false,
+          loading: false,
           logged: true,
           user: action.user,
         };
       case ActionTypes.REGISTER_FAILURE:
         return {
           ...state,
-          logging: false,
+          loading: false,
           error: action.error,
         };
 

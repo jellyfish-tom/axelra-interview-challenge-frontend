@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { __GRAY_SCALE } from '../../../layout/Theme';
+import { __ALERTS, __GRAY_SCALE } from '../../../layout/Theme';
 import { Todo, POSSIBLE_TODO_STATES } from '../../../model/Todo';
-import { TodoStatesDropdown, DropdownItem } from './TodoStatesDropdown';
+import { IconActionButton } from '../../../layout/UI/Components';
+import remove from '../../../assets/remove.svg';
+import complete from '../../../assets/complete.svg';
+import progress from '../../../assets/progress.svg';
 
 const TodoListItem = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
@@ -24,11 +27,20 @@ const Title = styled.span`
   flex: 1;
 `;
 
-export const TodosListItem = (props: { todo: Todo; index: number }) => {
-  const { todo, index } = props;
+export const TodosListItem = (props: {
+  todo: Todo;
+  index: number;
+  onStateChange: (todo: Todo) => void;
+  onRemove: (todo: Todo) => void;
+}) => {
+  const { todo, index, onStateChange, onRemove } = props;
 
-  const onChangeStateClick = (dropdownItem: DropdownItem) => {
-    console.log('CHANGE ITEM STATE!');
+  const onChangeCategoryClick = (e: any) => {
+    onStateChange(todo);
+  };
+
+  const onRemoveTodoClick = () => {
+    onRemove(todo);
   };
 
   const getPossibleNextStates = () => {
@@ -37,15 +49,28 @@ export const TodosListItem = (props: { todo: Todo; index: number }) => {
     );
   };
 
+  const getTodoStateButtonTheme = () => {
+    const color = todo.completed ? __ALERTS.INFO : __ALERTS.SUCCESS;
+
+    return { border: color, background: color };
+  };
+
   return (
     <TodoListItem>
       <Index>{index}.</Index>
       <Title>{todo.title}</Title>
-      <TodoStatesDropdown
-        initialLabel="Move to"
-        onClick={onChangeStateClick}
-        items={getPossibleNextStates()}
-      ></TodoStatesDropdown>
+      <IconActionButton
+        theme={getTodoStateButtonTheme()}
+        onClick={onChangeCategoryClick}
+      >
+        {todo.completed ? <img src={progress} /> : <img src={complete} />}
+      </IconActionButton>
+      <IconActionButton
+        theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
+        onClick={onRemoveTodoClick}
+      >
+        <img src={remove} />
+      </IconActionButton>
     </TodoListItem>
   );
 };

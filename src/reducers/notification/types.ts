@@ -1,5 +1,6 @@
 export enum ActionTypes {
-  HIDE_ERROR = 'HIDE_ERROR',
+  CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION',
+  SET_NOTIFICATION = 'SET_NOTIFICATION',
 }
 
 export type NotificationState = {
@@ -11,6 +12,14 @@ export type NotificationState = {
 };
 
 export type ClearNotification = {
-  type: ActionTypes.HIDE_ERROR;
+  type: ActionTypes.CLEAR_NOTIFICATION;
   error: null;
+};
+
+export type SetNotification = {
+  type: ActionTypes.SET_NOTIFICATION;
+  error?: string;
+  success?: string;
+  warning?: string;
+  info?: string;
 };
