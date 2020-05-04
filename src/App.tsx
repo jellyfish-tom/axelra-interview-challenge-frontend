@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import MainRouter from './routes/MainRouter';
+import React from "react";
+import styled from "styled-components";
+import MainRouter from "./routes/MainRouter";
 
 const Container = styled.div`
   display: flex;

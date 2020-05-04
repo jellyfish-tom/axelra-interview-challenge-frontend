@@ -1,4 +1,4 @@
-import { ActionTypes, NotificationState, NotificationAction } from './types';
+import { ActionTypes, NotificationState, NotificationAction } from "./types";
 
 export const initialState: NotificationState = {
   error: null,

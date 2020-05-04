@@ -6,7 +6,7 @@ export type User = {
 };
 
 export const UnloggedUser: User = {
-  _id: '',
-  email: '',
-  createdAt: '',
+  _id: "",
+  email: "",
+  createdAt: "",
 };

@@ -1,4 +1,4 @@
-import { ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from "redux-thunk";
 import {
   ActionTypes,
   FetchTodosFailure,
@@ -13,10 +13,10 @@ import {
   UpdateTodoRequest,
   UpdateTodoSuccess,
   UpdateTodoFailure,
-} from './types';
-import { api } from '../../helpers/api';
-import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
-import { PostableTodo, Todo } from '../../model/Todo';
+} from "./types";
+import { api } from "../../helpers/api";
+import { HTTP_OPTIONS, PROTOCOL_METHOD } from "../../helpers/FetchOptions";
+import { PostableTodo, Todo } from "../../model/Todo";
 
 const getUidQueryParam = (uid: string) => {
   return `?${new URLSearchParams({
@@ -58,7 +58,7 @@ export const fetchTodos = (uid: string): any => {
     } catch (error) {
       dispatch({
         type: ActionTypes.FETCH_TODOS_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };
@@ -85,7 +85,7 @@ export const addTodo = (todo: PostableTodo): any => {
       if (response.ok) {
         dispatch({
           type: ActionTypes.ADD_TODO_SUCCESS,
-          success: 'Message added successfully',
+          success: "Message added successfully",
         });
         dispatch(fetchTodos(todo.uid));
       } else {
@@ -97,7 +97,7 @@ export const addTodo = (todo: PostableTodo): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.ADD_TODO_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };
@@ -124,7 +124,7 @@ export const updateTodo = (todo: Todo): any => {
       if (response.ok) {
         dispatch({
           type: ActionTypes.UPDATE_TODO_SUCCESS,
-          success: 'Message updated successfully',
+          success: "Message updated successfully",
         });
 
         dispatch(fetchTodos(todo.uid));
@@ -137,7 +137,7 @@ export const updateTodo = (todo: Todo): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.UPDATE_TODO_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };
@@ -164,7 +164,7 @@ export const removeTodo = (todo: Todo): any => {
       if (response.ok) {
         dispatch({
           type: ActionTypes.REMOVE_TODO_SUCCESS,
-          success: 'Message removed successfully',
+          success: "Message removed successfully",
         });
 
         dispatch(fetchTodos(todo.uid));
@@ -177,7 +177,7 @@ export const removeTodo = (todo: Todo): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.REMOVE_TODO_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };

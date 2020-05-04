@@ -11,6 +11,6 @@ export interface Todo extends PostableTodo {
 }
 
 export const POSSIBLE_TODO_STATES = [
-  { value: 0, label: 'To Do' },
-  { value: 1, label: 'Done' },
+  { value: 0, label: "To Do" },
+  { value: 1, label: "Done" },
 ];

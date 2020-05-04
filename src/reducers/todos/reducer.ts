@@ -13,7 +13,7 @@ import {
   FetchTodosSuccess,
   FetchTodosFailure,
   TodoState,
-} from './types';
+} from "./types";
 
 const initialState: TodoState = {
   todos: [],

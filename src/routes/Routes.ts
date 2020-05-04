@@ -1,4 +1,4 @@
 export const routes = {
-  challenge: '/challenge',
-  login: '/login',
+  challenge: "/challenge",
+  login: "/login",
 };

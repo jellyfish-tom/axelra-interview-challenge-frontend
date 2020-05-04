@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { addTodo, AddTodo } from '../../../reducers/todos/actions';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { addTodo, AddTodo } from "../../../reducers/todos/actions";
 import {
   setNotification,
   SetNotification,
-} from '../../../reducers/notification/actions';
-import { POSSIBLE_TODO_STATES } from '../../../model/Todo';
-import { connect, useSelector } from 'react-redux';
-import { TodoStatesDropdown, DropdownItem } from './TodoStatesDropdown';
-import { RootState } from '../../../reducers/store';
-import { AuthState } from '../../../reducers/auth/types';
-import { Button, Input } from '../../../layout/UI/Components';
+} from "../../../reducers/notification/actions";
+import { POSSIBLE_TODO_STATES } from "../../../model/Todo";
+import { connect, useSelector } from "react-redux";
+import { TodoStatesDropdown, DropdownItem } from "./TodoStatesDropdown";
+import { RootState } from "../../../reducers/store";
+import { AuthState } from "../../../reducers/auth/types";
+import { Button, Input } from "../../../layout/UI/Components";
 
 const Form = styled.form`
   display: flex;
@@ -31,7 +31,7 @@ const UnconnectedTodosControls = (props: {
   const { auth }: { auth: AuthState } = useSelector(
     (state: RootState) => state
   );
-  const todoNeutralState = { value: -1, label: 'Pick state' };
+  const todoNeutralState = { value: -1, label: "Pick state" };
   const [todoState, setTodoState] = useState(todoNeutralState.value);
   const { addTodo, setNotification } = props;
   let input: HTMLInputElement;
@@ -47,14 +47,14 @@ const UnconnectedTodosControls = (props: {
     const messageEmpty = !input.value.trim();
 
     if (stateNotPicked || messageEmpty) {
-      let message = '';
+      let message = "";
 
       if (messageEmpty && stateNotPicked) {
-        message = 'You need to add description and pick state for todo';
+        message = "You need to add description and pick state for todo";
       } else if (messageEmpty && !stateNotPicked) {
-        message = 'You need to add description for you todo';
+        message = "You need to add description for you todo";
       } else if (!messageEmpty && stateNotPicked) {
-        message = 'You need to pick state for your todo';
+        message = "You need to pick state for your todo";
       }
 
       setNotification(undefined, message);
@@ -68,7 +68,7 @@ const UnconnectedTodosControls = (props: {
       completed: !!todoState,
     });
 
-    input.value = '';
+    input.value = "";
   };
 
   return (

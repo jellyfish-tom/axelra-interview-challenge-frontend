@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { __ALERTS, __COLORS } from '../../../layout/Theme';
-import { Todo } from '../../../model/Todo';
-import { IconActionButton } from '../../../layout/UI/Components';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import React from "react";
+import styled from "styled-components";
+import { __ALERTS, __COLORS } from "../../../layout/Theme";
+import { Todo } from "../../../model/Todo";
+import { IconActionButton } from "../../../layout/UI/Components";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 const TodoListItem = styled.div`
   background: ${__COLORS.WHITE};
@@ -51,7 +51,7 @@ export const TodosListItem = (props: {
       <IconActionButton
         theme={getTodoStateButtonTheme()}
         onClick={onChangeCategoryClick}
-        style={{ marginRight: '.3em' }}
+        style={{ marginRight: ".3em" }}
       >
         {todo.completed ? <ChevronLeftIcon /> : <ChevronRightIcon />}
       </IconActionButton>

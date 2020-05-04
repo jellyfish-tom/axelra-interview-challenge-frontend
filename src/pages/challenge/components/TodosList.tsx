@@ -1,16 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
 import {
   updateTodo,
   UpdateTodo,
   removeTodo,
   RemoveTodo,
-} from '../../../reducers/todos/actions';
-import { Todo } from '../../../model/Todo';
-import { TodosListItem } from './TodosListItem';
-import empty from '../../../assets/empty.svg';
-import { __GRAY_SCALE, __COLORS } from '../../../layout/Theme';
+} from "../../../reducers/todos/actions";
+import { Todo } from "../../../model/Todo";
+import { TodosListItem } from "./TodosListItem";
+import empty from "../../../assets/empty.svg";
+import { __GRAY_SCALE, __COLORS } from "../../../layout/Theme";
 
 const EmptyListImg = styled.img`
   margin: 3em auto 2em;

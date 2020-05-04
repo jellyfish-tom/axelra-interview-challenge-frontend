@@ -10,11 +10,11 @@ import {
   RegisterRequest,
   RegisterSuccess,
   RegisterFailure,
-} from './types';
+} from "./types";
 
-import { UnloggedUser } from '../../model/User';
+import { UnloggedUser } from "../../model/User";
 
-const localStorageUser = localStorage.getItem('user');
+const localStorageUser = localStorage.getItem("user");
 const initialState: AuthState = localStorageUser
   ? {
       logged: true,

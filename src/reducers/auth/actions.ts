@@ -1,4 +1,4 @@
-import { ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from "redux-thunk";
 import {
   ActionTypes,
   LoginRequest,
@@ -10,9 +10,9 @@ import {
   RegisterRequest,
   RegisterSuccess,
   RegisterFailure,
-} from './types';
-import { api } from '../../helpers/api';
-import { HTTP_OPTIONS, PROTOCOL_METHOD } from '../../helpers/FetchOptions';
+} from "./types";
+import { api } from "../../helpers/api";
+import { HTTP_OPTIONS, PROTOCOL_METHOD } from "../../helpers/FetchOptions";
 
 export const login = (email: string, password: string): any => {
   return async (
@@ -29,7 +29,7 @@ export const login = (email: string, password: string): any => {
       if (response.ok) {
         const user = await response.json();
 
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
         dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
 
         window.location.reload(true);
@@ -42,7 +42,7 @@ export const login = (email: string, password: string): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.LOGIN_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };
@@ -65,7 +65,7 @@ export const logout = (): any => {
       );
 
       if (response.ok) {
-        localStorage.removeItem('user');
+        localStorage.removeItem("user");
         window.location.reload(true);
       } else {
         dispatch({
@@ -76,7 +76,7 @@ export const logout = (): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.LOGOUT_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };
@@ -102,7 +102,7 @@ export const register = (email: string, password: string): any => {
         const user = (await response.json()).user;
 
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem("user", JSON.stringify(user));
 
           // dispatch({
           //   type: ActionTypes.REGISTER_SUCCESS,
@@ -125,7 +125,7 @@ export const register = (email: string, password: string): any => {
     } catch (e) {
       dispatch({
         type: ActionTypes.REGISTER_FAILURE,
-        error: 'Ouuch! There has been some error, sorry!',
+        error: "Ouuch! There has been some error, sorry!",
       });
     }
   };

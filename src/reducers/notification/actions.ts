@@ -1,5 +1,5 @@
-import { ActionTypes, ClearNotification, SetNotification } from './types';
-import { ThunkDispatch } from 'redux-thunk';
+import { ActionTypes, ClearNotification, SetNotification } from "./types";
+import { ThunkDispatch } from "redux-thunk";
 
 export const setNotification = (
   error?: string,

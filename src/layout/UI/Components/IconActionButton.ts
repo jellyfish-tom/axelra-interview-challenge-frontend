@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { border, background } from './utils';
-import { Button } from './Button';
+import styled from "styled-components";
+import { border, background } from "./utils";
+import { Button } from "./Button";
 
 export const IconActionButton = styled(Button)`
   width: 2em !important;
