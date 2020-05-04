@@ -7,11 +7,11 @@ import {
   removeTodo,
   RemoveTodo,
 } from '../../../reducers/todos/actions';
+import { Image, AssetType } from '../../../layout/UI/Components';
 import { Todo } from '../../../model/Todo';
 import { TodosListItem } from './TodosListItem';
-import empty from '../../../assets/empty.svg';
 
-const EmptyListImg = styled.img`
+const EmptyListImg = styled(Image)`
   margin: 40px auto 30px;
   width: fit-content;
   display: flex;
@@ -56,7 +56,7 @@ const UnconnectedTodosList = (props: {
           ></TodosListItem>
         ))
       ) : (
-        <EmptyListImg src={empty} />
+        <EmptyListImg source={'empty.svg'} assetType={AssetType.IMAGE} />
       )}
     </TodoList>
   );

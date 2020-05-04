@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { __ALERTS, __GRAY_SCALE } from '../../../layout/Theme';
 import { Todo } from '../../../model/Todo';
-import { IconActionButton } from '../../../layout/UI/Components';
-import remove from '../../../assets/remove.svg';
-import complete from '../../../assets/complete.svg';
-import progress from '../../../assets/progress.svg';
+import {
+  IconActionButton,
+  Image,
+  AssetType,
+} from '../../../layout/UI/Components';
 
 const TodoListItem = styled.div`
   border: 1px solid ${__GRAY_SCALE._200};
@@ -35,7 +36,7 @@ export const TodosListItem = (props: {
 }) => {
   const { todo, index, onStateChange, onRemove } = props;
 
-  const onChangeCategoryClick = (e: any) => {
+  const onChangeCategoryClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     onStateChange(todo);
   };
 
@@ -58,16 +59,16 @@ export const TodosListItem = (props: {
         onClick={onChangeCategoryClick}
       >
         {todo.completed ? (
-          <img alt="progress" src={progress} />
+          <Image source="progress.svg" assetType={AssetType.ICON} />
         ) : (
-          <img alt="completed" src={complete} />
+          <Image source="complete.svg" assetType={AssetType.ICON} />
         )}
       </IconActionButton>
       <IconActionButton
         theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
         onClick={onRemoveTodoClick}
       >
-        <img alt="remove" src={remove} />
+        <Image source="remove.svg" assetType={AssetType.ICON} />
       </IconActionButton>
     </TodoListItem>
   );

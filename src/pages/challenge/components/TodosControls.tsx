@@ -22,8 +22,6 @@ const Form = styled.form`
   margin-bottom: 1em;
 `;
 
-const todoNeutralState = -1; // TODO: maybe move it?? kinda weird that part of state is here?
-
 const UnconnectedTodosControls = (props: {
   addTodo: AddTodo;
   setNotification: SetNotification;
@@ -31,7 +29,8 @@ const UnconnectedTodosControls = (props: {
   const { auth, todos }: { auth: AuthState; todos: TodoState } = useSelector(
     (state: RootState) => state
   );
-  const [todoState, setTodoState] = useState(todoNeutralState);
+  const todoNeutralState = { value: -1, label: 'Pick state' };
+  const [todoState, setTodoState] = useState(todoNeutralState.value);
   const { addTodo, setNotification } = props;
   let input: HTMLInputElement;
 
@@ -39,9 +38,10 @@ const UnconnectedTodosControls = (props: {
     setTodoState(dropdownItem.value);
   };
 
-  const onFormSubmit = (e: any) => {
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const stateNotPicked = todoState === todoNeutralState;
+
+    const stateNotPicked = todoState === todoNeutralState.value;
     const messageEmpty = !input.value.trim();
 
     if (stateNotPicked || messageEmpty) {
@@ -56,6 +56,7 @@ const UnconnectedTodosControls = (props: {
       }
 
       setNotification(undefined, message);
+
       return;
     }
 
@@ -81,7 +82,7 @@ const UnconnectedTodosControls = (props: {
             }}
           />
           <TodoStatesDropdown
-            initialLabel="Pick state"
+            initialState={todoNeutralState}
             onClick={onMenuItemClick}
             items={POSSIBLE_TODO_STATES}
           ></TodoStatesDropdown>

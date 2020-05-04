@@ -50,15 +50,12 @@ export interface DropdownItem {
 }
 
 export const TodoStatesDropdown = (props: {
-  onClick: any;
+  onClick: (state: DropdownItem) => void;
   items: DropdownItem[];
-  initialLabel: string;
+  initialState: DropdownItem;
 }) => {
-  const { onClick, items, initialLabel } = props;
-  const [activeState, setActiveState] = useState({
-    label: initialLabel,
-    value: -1,
-  });
+  const { onClick, items, initialState } = props;
+  const [activeState, setActiveState] = useState(initialState);
 
   const onMenuItemClick = (state: DropdownItem) => {
     setActiveState(state);
@@ -67,7 +64,13 @@ export const TodoStatesDropdown = (props: {
 
   return (
     <DropDownLi>
-      <Button>{activeState.label}</Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+        }}
+      >
+        {activeState.label}
+      </Button>
       <DropDownContent>
         {items.map((item) => (
           <Item key={item.value} onClick={() => onMenuItemClick(item)}>

@@ -23,3 +23,11 @@ export type SetNotification = {
   warning?: string;
   info?: string;
 };
+
+export type NotificationAction = {
+  type: string;
+  error?: string;
+  success?: string;
+  warning?: string;
+  info?: string;
+};

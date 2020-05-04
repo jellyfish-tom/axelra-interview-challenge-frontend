@@ -1,6 +1,6 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
-import { __COLORS } from "../../Theme";
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import { __COLORS } from '../../Theme';
 
 const Animation = keyframes`
     0%, 100% {
@@ -11,6 +11,7 @@ const Animation = keyframes`
     }
 `;
 
+//@ts-ignore
 const Grid = styled.div<{ color: __COLORS }>`
   display: inline-block;
   position: relative;
@@ -21,7 +22,7 @@ const Grid = styled.div<{ color: __COLORS }>`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: ${props => props.color};
+    background: ${(props) => props.color};
     animation: ${Animation} 1.2s linear infinite;
   }
   & div:nth-child(1) {

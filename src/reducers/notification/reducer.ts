@@ -1,4 +1,4 @@
-import { ActionTypes, NotificationState } from './types';
+import { ActionTypes, NotificationState, NotificationAction } from './types';
 
 export const initialState: NotificationState = {
   error: null,
@@ -9,8 +9,8 @@ export const initialState: NotificationState = {
 };
 
 export const notificationReducer = () => {
-  return (state = initialState, action: any) => {
-    const { error, success, info, warning } = action;
+  return (state = initialState, action: NotificationAction) => {
+    const { error, warning, info, success } = action;
 
     // structured like that so it catches props from other reducers
     if (error) {

@@ -24,7 +24,6 @@ const BackgroundColor = styled.div`
   }
 `;
 
-// TODO: check responsiveness
 const Container = styled(BackgroundColor)`
   min-height: 35px;
   max-width: 500px;
@@ -65,28 +64,30 @@ const UnconnectedNotification = (props: {
   const [notificationVisible, setNotificationVisible] = useState(false);
   const { error, warning, info, success } = notification;
 
-  const [slideUpTimeout, setSlideUpTimeout] = useState();
-  const [clearNotificationTimeout, setClearNotificationTimeout] = useState();
-
   useEffect(() => {
+    let slideUpTimeout: number = -1;
+    let clearNotificationTimeout: number = -1;
+
     if (error || warning || info || success) {
       setNotificationVisible(true);
+
       clearTimeout(slideUpTimeout);
       clearTimeout(clearNotificationTimeout);
 
-      const _slideUpTimeout = setTimeout(() => {
+      slideUpTimeout = window.setTimeout(() => {
         setNotificationVisible(false);
 
-        const _clearNotificationTimeout = setTimeout(() => {
+        clearNotificationTimeout = window.setTimeout(() => {
           clearNotification();
         }, 700);
-
-        setClearNotificationTimeout(_clearNotificationTimeout);
       }, 3000);
-
-      setSlideUpTimeout(_slideUpTimeout);
     }
-  }, [error, warning, info, success]);
+
+    return () => {
+      clearTimeout(slideUpTimeout);
+      clearTimeout(clearNotificationTimeout);
+    };
+  }, [error, warning, info, success, clearNotification]);
 
   return (
     <Container className={`${notificationVisible && 'visible'}`}>

@@ -135,7 +135,6 @@ export const updateTodo = (todo: Todo): any => {
         });
       }
     } catch (e) {
-      console.log(e);
       dispatch({
         type: ActionTypes.UPDATE_TODO_FAILURE,
         error: 'Ouuch! There has been some error, sorry!',
