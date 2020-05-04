@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { fetchTodos, FetchTodos } from '../../../reducers/todos/actions';
-import { RootState } from '../../../reducers/store';
-import { TodoState } from '../../../reducers/todos/types';
-import { AuthState } from '../../../reducers/auth/types';
-import { connect, useSelector } from 'react-redux';
-import { TodosList } from './TodosList';
-import { TodosControls } from './TodosControls';
-import { Spinner } from '../../../layout/UI/Spinners/Spinner';
-import { __COLORS } from '../../../layout/Theme';
-import { Todo, POSSIBLE_TODO_STATES } from '../../../model/Todo';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { fetchTodos, FetchTodos } from "../../../reducers/todos/actions";
+import { RootState } from "../../../reducers/store";
+import { TodoState } from "../../../reducers/todos/types";
+import { AuthState } from "../../../reducers/auth/types";
+import { connect, useSelector } from "react-redux";
+import { TodosList } from "./TodosList";
+import { TodosControls } from "./TodosControls";
+import { Spinner } from "../../../layout/UI/Spinners/Spinner";
+import { __COLORS } from "../../../layout/Theme";
+import { Todo, POSSIBLE_TODO_STATES } from "../../../model/Todo";
 
 const Container = styled.div`
   padding: 1em;
@@ -26,6 +26,7 @@ const ListsContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   height: calc(100% - 3em);
+  align-items: center;
 `;
 
 const Board = (props: { fetchTodos: FetchTodos }) => {
@@ -43,28 +44,22 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
 
   return (
     <Container>
-      {!auth.loading ? (
-        <Spinner color={__COLORS.SECONDARY}></Spinner>
-      ) : (
-        <>
-          <TodosControls></TodosControls>
-          <ListsContainer>
-            {todos.loading && todos.todos.length === 0 ? (
-              <Spinner color={__COLORS.SECONDARY}></Spinner>
-            ) : (
-              <>
-                {POSSIBLE_TODO_STATES.map((state, index) => (
-                  <TodosList
-                    key={index}
-                    header={state.label}
-                    todos={filterTodosByState(todos.todos, !!state.value)}
-                  ></TodosList>
-                ))}
-              </>
-            )}
-          </ListsContainer>
-        </>
-      )}
+      <TodosControls></TodosControls>
+      <ListsContainer>
+        {todos.loading && todos.todos.length === 0 ? (
+          <Spinner color={__COLORS.SECONDARY}></Spinner>
+        ) : (
+          <>
+            {POSSIBLE_TODO_STATES.map((state, index) => (
+              <TodosList
+                key={index}
+                header={state.label}
+                todos={filterTodosByState(todos.todos, !!state.value)}
+              ></TodosList>
+            ))}
+          </>
+        )}
+      </ListsContainer>
     </Container>
   );
 };

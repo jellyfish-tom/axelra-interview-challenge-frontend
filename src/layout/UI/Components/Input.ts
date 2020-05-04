@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { border, color } from './utils';
+import styled from "styled-components";
+import { background, border, color } from "./utils";
+import { darken } from "polished";
 
 export const Input = styled.input`
   height: 2em;
@@ -11,4 +12,10 @@ export const Input = styled.input`
   box-sizing: border-box;
   font-size: 0.9em;
   outline: none;
+
+  &:hover,
+  &:focus {
+    border: 1px solid ${(props) => darken(0.1, border(props))};
+    background: ${(props) => darken(0.1, background(props))};
+  }
 `;

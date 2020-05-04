@@ -1,19 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom';
-import { Challenge } from '../pages/challenge/Challenge';
-import { LoginPage } from '../pages/login/Login';
-import { Notification } from '../components/Notification';
-import { PrivateRoute } from '../components/PrivateRoute';
+} from "react-router-dom";
+import { Challenge } from "../pages/challenge/Challenge";
+import { LoginPage } from "../pages/login/Login";
+import { Notification } from "../components/Notification";
+import { PrivateRoute } from "../components/PrivateRoute";
 
-import { routes } from './Routes';
+import { routes } from "./Routes";
 
 const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   width: 100vw;
 `;
 
@@ -26,9 +30,9 @@ const MainRouter = () => {
           <Route
             path={routes.login}
             render={(props) => {
-              return localStorage.getItem('user') ? (
+              return localStorage.getItem("user") ? (
                 <Redirect
-                  to={{ pathname: '/', state: { from: props.location } }}
+                  to={{ pathname: "/", state: { from: props.location } }}
                 />
               ) : (
                 <LoginPage />
@@ -39,9 +43,9 @@ const MainRouter = () => {
           <PrivateRoute path="/" component={Challenge} exact />
           <Route
             exact
-            path={'/*'}
+            path={"/*"}
             render={() => {
-              return <Redirect to={'/'} />;
+              return <Redirect to={"/"} />;
             }}
           />
         </Switch>

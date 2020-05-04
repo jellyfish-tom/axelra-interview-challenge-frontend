@@ -1,6 +1,6 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import { __COLORS } from '../../Theme';
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import { __COLORS } from "../../Theme";
 
 const Animation = keyframes`
     0%, 100% {
@@ -13,16 +13,16 @@ const Animation = keyframes`
 
 //@ts-ignore
 const Grid = styled.div<{ color: __COLORS }>`
-  display: inline-block;
+  /* display: inline-block; */
   position: relative;
   width: 64px;
   height: 64px;
-  margin: 0 auto;
+  /* margin: 0 auto;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  align-self: center;
+  align-self: center; */
 
   & div {
     position: absolute;

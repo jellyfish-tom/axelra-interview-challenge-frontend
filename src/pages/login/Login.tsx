@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { login, Login, register, Register } from '../../reducers/auth/actions';
-import { ActionTypes } from '../../reducers/auth/types';
-import { Button, Input } from '../../layout/UI/Components';
-import { RootState } from '../../reducers/store';
-import { AuthState } from '../../reducers/auth/types';
-import { Spinner } from '../../layout/UI/Spinners/Spinner';
-import { __COLORS } from '../../layout/Theme';
-import { BounceIn } from '../../layout/UI/Animations/BounceIn';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { login, Login, register, Register } from "../../reducers/auth/actions";
+import { ActionTypes } from "../../reducers/auth/types";
+import { Button, Input } from "../../layout/UI/Components";
+import { RootState } from "../../reducers/store";
+import { AuthState } from "../../reducers/auth/types";
+import { Spinner } from "../../layout/UI/Spinners/Spinner";
+import { __COLORS } from "../../layout/Theme";
+import { BounceIn } from "../../layout/UI/Animations/BounceIn";
 
 const Title = styled.h1`
   font-size: 2em;
 `;
 
 const Container = styled.div`
-  padding: 1em;
+  margin-top: -3em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,8 +57,8 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
     (state: RootState) => state
   );
   const { login, register } = props;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [registrationEnabled, setRegistrationEnabled] = useState(false);
 
   useCleanUserState();
@@ -75,10 +75,16 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
     setRegistrationEnabled(!registrationEnabled);
   };
 
+  const keyPressed = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      registrationEnabled ? register(email, password) : login(email, password);
+    }
+  };
+
   return (
     <Container>
       <Title>Axelera Challenge Login</Title>
-      {auth.loading ? (
+      {auth.loading && email && password ? (
         <Spinner color={__COLORS.SECONDARY}></Spinner>
       ) : (
         <>
@@ -87,6 +93,7 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(e.target.value)
             }
+            onKeyPress={keyPressed}
           ></LoginInput>
           <LoginInput
             placeholder="password"
@@ -94,9 +101,10 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(e.target.value)
             }
+            onKeyPress={keyPressed}
           ></LoginInput>
           <LoginButton onClick={registrationEnabled ? onRegister : onLogin}>
-            {registrationEnabled ? 'Register' : 'Login'}
+            {registrationEnabled ? "Register" : "Login"}
           </LoginButton>
           {registrationEnabled ? (
             <CallToAction unselectable="on" onClick={onToggleRegistration}>

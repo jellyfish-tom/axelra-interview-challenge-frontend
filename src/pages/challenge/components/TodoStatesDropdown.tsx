@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { __GRAY_SCALE } from '../../../layout/Theme';
-import { Button } from '../../../layout/UI/Components/Button';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { __GRAY_SCALE } from "../../../layout/Theme";
+import { Button } from "../../../layout/UI/Components/Button";
 
 const StyledLi = styled.li`
   float: left;
@@ -35,9 +35,10 @@ const Item = styled.a`
   display: block;
   text-align: left;
   font-size: 0.9em;
+  transition: all 0.5s;
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #e6e6e6;
   }
 
   &:first-child {
