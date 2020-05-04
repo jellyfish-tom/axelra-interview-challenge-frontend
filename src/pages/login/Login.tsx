@@ -8,6 +8,7 @@ import { RootState } from '../../reducers/store';
 import { AuthState } from '../../reducers/auth/types';
 import { Spinner } from '../../layout/UI/Spinners/Spinner';
 import { __COLORS } from '../../layout/Theme';
+import { BounceIn } from '../../layout/UI/Animations/BounceIn';
 
 const Title = styled.h1`
   font-size: 32px;
@@ -18,6 +19,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: ${BounceIn} 2s ease-in-out 0s forwards;
 `;
 
 const CallToAction = styled.span`
