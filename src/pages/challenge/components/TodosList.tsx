@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import {
-  updateTodo,
-  UpdateTodo,
-  removeTodo,
-  RemoveTodo,
-} from "../../../reducers/todos/actions";
+import { removeTodo, RemoveTodo } from "../../../reducers/todos/actions";
 import { Todo } from "../../../model/Todo";
 import { TodosListItem } from "./TodosListItem";
 import empty from "../../../assets/empty.svg";
@@ -56,17 +51,9 @@ const UnconnectedTodosList = (props: {
   todos: Todo[];
   header: string;
   removeTodo: RemoveTodo;
-  updateTodo: UpdateTodo;
   id: string;
 }) => {
-  const { todos, header, removeTodo, updateTodo, id } = props;
-
-  const onStateChange = (todo: Todo) => {
-    updateTodo({
-      ...todo,
-      completed: !todo.completed,
-    });
-  };
+  const { todos, header, removeTodo, id } = props;
 
   const onRemove = (todo: Todo) => {
     removeTodo(todo);
@@ -105,6 +92,5 @@ const UnconnectedTodosList = (props: {
 };
 
 export const TodosList = connect(null, {
-  updateTodo,
   removeTodo,
 })(UnconnectedTodosList);

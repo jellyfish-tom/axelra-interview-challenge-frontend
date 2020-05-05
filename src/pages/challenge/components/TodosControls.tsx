@@ -5,7 +5,10 @@ import {
   setNotification,
   SetNotification,
 } from "../../../reducers/notification/actions";
-import { POSSIBLE_TODO_STATES } from "../../../model/Todo";
+import {
+  POSSIBLE_TODO_DROPDOWN_STATES,
+  NEUTRAL_TODO_DROPDOWN_STATE,
+} from "../../../model/Dropdown";
 import { connect, useSelector } from "react-redux";
 import { TodoStatesDropdown, DropdownItem } from "./TodoStatesDropdown";
 import { RootState } from "../../../reducers/store";
@@ -31,8 +34,8 @@ const UnconnectedTodosControls = (props: {
   const { auth }: { auth: AuthState } = useSelector(
     (state: RootState) => state
   );
-  const todoNeutralState = { value: -1, label: "Pick state" };
-  const [todoState, setTodoState] = useState(todoNeutralState.value);
+
+  const [todoState, setTodoState] = useState(NEUTRAL_TODO_DROPDOWN_STATE.value);
   const { addTodo, setNotification } = props;
   let input: HTMLInputElement;
 
@@ -43,7 +46,7 @@ const UnconnectedTodosControls = (props: {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const stateNotPicked = todoState === todoNeutralState.value;
+    const stateNotPicked = todoState === NEUTRAL_TODO_DROPDOWN_STATE.value;
     const messageEmpty = !input.value.trim();
 
     if (stateNotPicked || messageEmpty) {
@@ -81,9 +84,9 @@ const UnconnectedTodosControls = (props: {
         }}
       />
       <TodoStatesDropdown
-        initialState={todoNeutralState}
+        initialState={NEUTRAL_TODO_DROPDOWN_STATE}
         onClick={onMenuItemClick}
-        items={POSSIBLE_TODO_STATES}
+        items={POSSIBLE_TODO_DROPDOWN_STATES}
       ></TodoStatesDropdown>
       <Button type="submit" tabIndex={2}>
         Add Todo

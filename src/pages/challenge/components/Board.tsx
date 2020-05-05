@@ -14,7 +14,8 @@ import { TodosList } from "./TodosList";
 import { TodosControls } from "./TodosControls";
 import { Spinner } from "../../../layout/UI/Spinners/Spinner";
 import { __COLORS } from "../../../layout/Theme";
-import { Todo, POSSIBLE_TODO_STATES } from "../../../model/Todo";
+import { Todo } from "../../../model/Todo";
+import { POSSIBLE_TODO_DROPDOWN_STATES } from "../../../model/Dropdown";
 import { DragDropContext } from "react-beautiful-dnd";
 
 export interface Column {
@@ -57,7 +58,7 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
   useEffect(() => {
     console.log("EFFECT!!!");
     setColumns(
-      POSSIBLE_TODO_STATES.map((state, index) => ({
+      POSSIBLE_TODO_DROPDOWN_STATES.map((state, index) => ({
         id: index,
         header: state.label,
         todos: filterTodosByState(todos.todos, !!state.value),
