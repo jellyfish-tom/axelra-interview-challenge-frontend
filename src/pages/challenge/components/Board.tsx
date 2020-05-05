@@ -64,7 +64,7 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
         todos: filterTodosByState(todos.todos, !!state.value),
       }))
     );
-  }, [todos]);
+  }, [todos.todos]);
 
   const filterTodosByState = (todos: Todo[], completed: boolean) =>
     todos.filter((todo) => todo.completed === completed);
@@ -176,9 +176,8 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
           ) : (
             <>
               {columns.map((column: Column, index: number) => (
-                <ErrorBoundary>
+                <ErrorBoundary key={index}>
                   <TodosList
-                    key={index}
                     header={column.header}
                     todos={column.todos}
                     id={String(index)}
