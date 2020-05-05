@@ -23,7 +23,7 @@ const DropDownLi = styled(StyledLi)`
   cursor: pointer;
   margin-right: 0.5em;
 
-  &:hover ${DropDownContent}, &:focus ${DropDownContent} {
+  &:hover ${DropDownContent} {
     display: block;
   }
 `;
@@ -56,7 +56,7 @@ export const TodoStatesDropdown = (props: {
   };
 
   return (
-    <DropDownLi tabIndex={1}>
+    <DropDownLi>
       <Button
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.preventDefault();

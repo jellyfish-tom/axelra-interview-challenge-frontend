@@ -29,7 +29,7 @@ const UnconnectedUserMenu = (props: { logout: Logout }) => {
   return (
     <ErrorBoundary>
       <Container>
-        <LoggedInAs>Logged in as: {auth.user.email}</LoggedInAs>
+        <LoggedInAs>{auth.user.email}</LoggedInAs>
         <Button onClick={logout}>Logout</Button>
       </Container>
     </ErrorBoundary>

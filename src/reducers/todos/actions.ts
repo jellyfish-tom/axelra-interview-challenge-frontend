@@ -125,7 +125,7 @@ export const updateTodo = (todo: Todo): any => {
       if (response.ok) {
         dispatch({
           type: ActionTypes.UPDATE_TODO_SUCCESS,
-          success: "Message updated successfully",
+          success: "Todo updated successfully",
         });
 
         dispatch(fetchTodos(todo.uid));

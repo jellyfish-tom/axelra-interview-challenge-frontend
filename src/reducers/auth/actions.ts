@@ -30,7 +30,6 @@ export const login = (email: string, password: string): any => {
         const user = await response.json();
 
         localStorage.setItem("user", JSON.stringify(user));
-        dispatch({ type: ActionTypes.LOGIN_SUCCESS, user });
 
         window.location.reload(true);
       } else {
@@ -103,11 +102,6 @@ export const register = (email: string, password: string): any => {
 
         if (user) {
           localStorage.setItem("user", JSON.stringify(user));
-
-          // dispatch({
-          //   type: ActionTypes.REGISTER_SUCCESS,
-          //   user,
-          // });
 
           window.location.reload(true);
         } else {
