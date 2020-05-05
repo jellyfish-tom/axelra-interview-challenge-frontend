@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { fetchTodos, FetchTodos } from "../../../reducers/todos/actions";
+import {
+  fetchTodos,
+  FetchTodos,
+  updateTodo,
+  UpdateTodo,
+} from "../../../reducers/todos/actions";
 import { RootState } from "../../../reducers/store";
 import { TodoState } from "../../../reducers/todos/types";
 import { AuthState } from "../../../reducers/auth/types";
@@ -37,11 +42,11 @@ const ListsContainer = styled.div`
   align-items: center;
 `;
 
-const Board = (props: { fetchTodos: FetchTodos }) => {
+const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
   const { todos, auth }: { todos: TodoState; auth: AuthState } = useSelector(
     (state: RootState) => state
   );
-  const { fetchTodos } = props;
+  const { fetchTodos, updateTodo } = props;
 
   const [columns, setColumns] = useState();
 
@@ -50,6 +55,7 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
   }, [fetchTodos, auth.user._id]);
 
   useEffect(() => {
+    console.log("EFFECT!!!");
     setColumns(
       POSSIBLE_TODO_STATES.map((state, index) => ({
         id: index,
@@ -77,8 +83,9 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
     // copy todos so data is not mutated
     const start: Column = columns[source.droppableId];
     const finish: Column = columns[destination.droppableId];
+    const droppedInSameColumn = start.id === finish.id;
 
-    if (start.id === finish.id) {
+    if (droppedInSameColumn) {
       const newTodos = [...start.todos];
 
       // insert todo in new place in same column
@@ -110,6 +117,11 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
     } else {
       //moving from one list to another
       const newStartColumnTodos = [...start.todos];
+      const todoToUpdate = start.todos.find(
+        (todo: Todo) => todo._id === draggableId
+      ) as Todo;
+
+      todoToUpdate.completed = !todoToUpdate.completed;
 
       // insert todo in new place in same column
       newStartColumnTodos.splice(source.index, 1);
@@ -120,11 +132,7 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
       };
 
       const newFinishColumnTodos = [...finish.todos];
-      newFinishColumnTodos.splice(
-        destination.index,
-        0,
-        start.todos.find((todo: Todo) => todo._id === draggableId) as Todo
-      );
+      newFinishColumnTodos.splice(destination.index, 0, todoToUpdate);
 
       const newFinishColumn = {
         ...start,
@@ -149,6 +157,8 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
       newColumns.splice(finishColumnIndex, 0, newFinishColumn);
 
       setColumns(newColumns);
+      updateTodo(todoToUpdate);
+
       return;
     }
   };
@@ -180,4 +190,5 @@ const Board = (props: { fetchTodos: FetchTodos }) => {
 
 export default connect(null, {
   fetchTodos,
+  updateTodo,
 })(Board);

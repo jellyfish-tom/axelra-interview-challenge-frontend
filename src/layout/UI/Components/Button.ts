@@ -25,8 +25,7 @@ export const Button = styled.button`
   user-select: none; /* Standard */
   transition: all 0.5s;
 
-  &:hover,
-  &:focus {
+  &:hover {
     border: 1px solid ${(props: any) => darken(0.1, border(props))};
     background: ${(props: any) => darken(0.1, background(props))};
   }

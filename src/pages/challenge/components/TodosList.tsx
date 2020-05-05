@@ -89,7 +89,6 @@ const UnconnectedTodosList = (props: {
                     index={index}
                     key={todo._id}
                     todo={todo}
-                    onStateChange={onStateChange}
                     onRemove={onRemove}
                   ></TodosListItem>
                 ))

@@ -4,9 +4,12 @@ import { __ALERTS, __COLORS } from "../../../layout/Theme";
 import { Todo } from "../../../model/Todo";
 import { IconActionButton } from "../../../layout/UI/Components";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { Draggable } from "react-beautiful-dnd";
+
+const HiddenIconActionButton = styled(IconActionButton)`
+  opacity: 0;
+  transition: all 0.5s;
+`;
 
 const TodoListItem = styled.div`
   background: ${__COLORS.WHITE};
@@ -25,6 +28,13 @@ const TodoListItem = styled.div`
 
   background-color: ${(props: any) =>
     props.isDragging ? __COLORS.FOURTH : __COLORS.WHITE};
+
+  &:hover {
+    ${HiddenIconActionButton} {
+      opacity: 1;
+      transition: all 0.5s;
+    }
+  }
 `;
 
 const Title = styled.span`
@@ -34,24 +44,13 @@ const Title = styled.span`
 
 export const TodosListItem = (props: {
   todo: Todo;
-  onStateChange: (todo: Todo) => void;
   onRemove: (todo: Todo) => void;
   index: number;
 }) => {
-  const { todo, onStateChange, onRemove, index } = props;
-
-  const onChangeCategoryClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onStateChange(todo);
-  };
+  const { todo, onRemove, index } = props;
 
   const onRemoveTodoClick = () => {
     onRemove(todo);
-  };
-
-  const getTodoStateButtonTheme = () => {
-    const color = todo.completed ? __ALERTS.INFO : __ALERTS.SUCCESS;
-
-    return { border: color, background: color };
   };
 
   return (
@@ -64,19 +63,12 @@ export const TodosListItem = (props: {
           isDragging={snapshot.isDragging}
         >
           <Title>{todo.title}</Title>
-          <IconActionButton
-            theme={getTodoStateButtonTheme()}
-            onClick={onChangeCategoryClick}
-            style={{ marginRight: ".3em" }}
-          >
-            {todo.completed ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconActionButton>
-          <IconActionButton
+          <HiddenIconActionButton
             theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
             onClick={onRemoveTodoClick}
           >
             <DeleteOutlineIcon />
-          </IconActionButton>
+          </HiddenIconActionButton>
         </TodoListItem>
       )}
     </Draggable>

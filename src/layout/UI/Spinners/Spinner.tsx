@@ -29,7 +29,7 @@ const Grid = styled.div<{ color: __COLORS }>`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: ${(props) => props.color};
+    background: ${(props: any) => props.color};
     animation: ${Animation} 1.2s linear infinite;
   }
   & div:nth-child(1) {
