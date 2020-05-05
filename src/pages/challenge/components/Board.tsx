@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { connect, useSelector } from "react-redux";
+import { DragDropContext } from "react-beautiful-dnd";
 import {
   fetchTodos,
   FetchTodos,
@@ -9,14 +11,12 @@ import {
 import { RootState } from "../../../reducers/store";
 import { TodoState } from "../../../reducers/todos/types";
 import { AuthState } from "../../../reducers/auth/types";
-import { connect, useSelector } from "react-redux";
 import { TodosList } from "./TodosList";
 import { TodosControls } from "./TodosControls";
 import { Spinner } from "../../../layout/UI/Spinners/Spinner";
 import { __COLORS } from "../../../layout/Theme";
 import { Todo } from "../../../model/Todo";
 import { POSSIBLE_TODO_DROPDOWN_STATES } from "../../../model/Dropdown";
-import { DragDropContext } from "react-beautiful-dnd";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
 export interface Column {

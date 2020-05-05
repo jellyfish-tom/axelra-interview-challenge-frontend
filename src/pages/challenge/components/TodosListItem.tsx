@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import { Draggable } from "react-beautiful-dnd";
 import { __ALERTS, __COLORS } from "../../../layout/Theme";
 import { Todo } from "../../../model/Todo";
 import { IconActionButton } from "../../../layout/UI/Components";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import { Draggable } from "react-beautiful-dnd";
+import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
 const HiddenIconActionButton = styled(IconActionButton)`
   opacity: 0;
@@ -54,23 +55,25 @@ export const TodosListItem = (props: {
   };
 
   return (
-    <Draggable draggableId={todo._id} index={index}>
-      {(provided: any, snapshot: any) => (
-        <TodoListItem
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-          isDragging={snapshot.isDragging}
-        >
-          <Title>{todo.title}</Title>
-          <HiddenIconActionButton
-            theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
-            onClick={onRemoveTodoClick}
+    <ErrorBoundary>
+      <Draggable draggableId={todo._id} index={index}>
+        {(provided: any, snapshot: any) => (
+          <TodoListItem
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
           >
-            <DeleteOutlineIcon />
-          </HiddenIconActionButton>
-        </TodoListItem>
-      )}
-    </Draggable>
+            <Title>{todo.title}</Title>
+            <HiddenIconActionButton
+              theme={{ border: __ALERTS.ERROR, background: __ALERTS.ERROR }}
+              onClick={onRemoveTodoClick}
+            >
+              <DeleteOutlineIcon />
+            </HiddenIconActionButton>
+          </TodoListItem>
+        )}
+      </Draggable>
+    </ErrorBoundary>
   );
 };
