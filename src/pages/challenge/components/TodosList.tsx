@@ -11,6 +11,8 @@ import { Todo } from "../../../model/Todo";
 import { TodosListItem } from "./TodosListItem";
 import empty from "../../../assets/empty.svg";
 import { __GRAY_SCALE, __COLORS } from "../../../layout/Theme";
+import { Droppable } from "react-beautiful-dnd";
+import { lighten } from "polished";
 
 const EmptyListImg = styled.img`
   margin: 3em auto 2em;
@@ -43,6 +45,11 @@ const ItemsContainer = styled.div`
   overflow-y: scroll;
   margin-right: -2em;
   padding-right: 1.1em;
+  border-radius: 0.3em;
+  margin-left: -1em;
+
+  background-color: ${(props: any) =>
+    props.isDraggingOver ? lighten(0.3, __COLORS.PRIMARY) : __COLORS.PRIMARY};
 `;
 
 const UnconnectedTodosList = (props: {
@@ -50,8 +57,9 @@ const UnconnectedTodosList = (props: {
   header: string;
   removeTodo: RemoveTodo;
   updateTodo: UpdateTodo;
+  id: string;
 }) => {
-  const { todos, header, removeTodo, updateTodo } = props;
+  const { todos, header, removeTodo, updateTodo, id } = props;
 
   const onStateChange = (todo: Todo) => {
     updateTodo({
@@ -67,20 +75,32 @@ const UnconnectedTodosList = (props: {
   return (
     <TodoList>
       <ListHeader>{header}</ListHeader>
-      <ItemsContainer>
-        {todos.length > 0 ? (
-          todos.map((todo, index) => (
-            <TodosListItem
-              key={todo._id}
-              todo={todo}
-              onStateChange={onStateChange}
-              onRemove={onRemove}
-            ></TodosListItem>
-          ))
-        ) : (
-          <EmptyListImg src={empty} />
+      <Droppable droppableId={id}>
+        {(provided: any, snapshot: any) => (
+          <>
+            <ItemsContainer
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {todos.length > 0 ? (
+                todos.map((todo, index) => (
+                  <TodosListItem
+                    index={index}
+                    key={todo._id}
+                    todo={todo}
+                    onStateChange={onStateChange}
+                    onRemove={onRemove}
+                  ></TodosListItem>
+                ))
+              ) : (
+                <EmptyListImg src={empty} />
+              )}
+            </ItemsContainer>
+            {provided.placeholder}
+          </>
         )}
-      </ItemsContainer>
+      </Droppable>
     </TodoList>
   );
 };
