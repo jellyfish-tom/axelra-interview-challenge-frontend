@@ -15,15 +15,10 @@ import { TodosList } from "./TodosList";
 import { TodosControls } from "./TodosControls";
 import { Spinner } from "../../../layout/UI/Spinners/Spinner";
 import { __COLORS } from "../../../layout/Theme";
+import { BoardColumn } from "../../../model/BoardColumn";
 import { Todo } from "../../../model/Todo";
 import { POSSIBLE_TODO_DROPDOWN_STATES } from "../../../model/Dropdown";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
-
-export interface Column {
-  id: number;
-  header: string;
-  todos: Todo[];
-}
 
 const Container = styled.div`
   padding: 1em;
@@ -81,25 +76,27 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
       return;
     }
 
-    // copy todos so data is not mutated
-    const start: Column = columns[source.droppableId];
-    const finish: Column = columns[destination.droppableId];
-    const droppedInSameColumn = start.id === finish.id;
+    const sourceColumn: BoardColumn = columns[source.droppableId];
+    const destinationColumn: BoardColumn = columns[destination.droppableId];
+
+    const droppedInSameColumn = sourceColumn.id === destinationColumn.id;
 
     if (droppedInSameColumn) {
-      const newTodos = [...start.todos];
+      const newTodos = [...sourceColumn.todos];
 
       // insert todo in new place in same column
       newTodos.splice(source.index, 1);
       newTodos.splice(
         destination.index,
         0,
-        start.todos.find((todo: Todo) => todo._id === draggableId) as Todo
+        sourceColumn.todos.find(
+          (todo: Todo) => todo._id === draggableId
+        ) as Todo
       );
 
       // create new column
       const newColumn = {
-        ...start,
+        ...sourceColumn,
         todos: newTodos,
       };
 
@@ -107,7 +104,7 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
       const newColumns = [...columns];
       // find index of column to be removed
       const columnToRemoveIndex = columns.findIndex(
-        (_column: Column) => _column.id === start.id
+        (_column: BoardColumn) => _column.id === sourceColumn.id
       );
       // insert column in proper place
       newColumns.splice(columnToRemoveIndex, 1);
@@ -117,8 +114,8 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
       return;
     } else {
       //moving from one list to another
-      const newStartColumnTodos = [...start.todos];
-      const todoToUpdate = start.todos.find(
+      const newStartColumnTodos = [...sourceColumn.todos];
+      const todoToUpdate = sourceColumn.todos.find(
         (todo: Todo) => todo._id === draggableId
       ) as Todo;
 
@@ -128,15 +125,15 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
       newStartColumnTodos.splice(source.index, 1);
 
       const newStartColumn = {
-        ...start,
+        ...sourceColumn,
         todos: newStartColumnTodos,
       };
 
-      const newFinishColumnTodos = [...finish.todos];
+      const newFinishColumnTodos = [...destinationColumn.todos];
       newFinishColumnTodos.splice(destination.index, 0, todoToUpdate);
 
-      const newFinishColumn = {
-        ...start,
+      const newDestinationColumn = {
+        ...destinationColumn,
         todos: newFinishColumnTodos,
       };
 
@@ -144,18 +141,18 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
       const newColumns = [...columns];
       // find index of column to be removed
       const startColumnToIndex = columns.findIndex(
-        (_column: Column) => _column.id === start.id
+        (_column: BoardColumn) => _column.id === sourceColumn.id
       );
       // insert column in proper place
       newColumns.splice(startColumnToIndex, 1);
       newColumns.splice(startColumnToIndex, 0, newStartColumn);
 
       const finishColumnIndex = columns.findIndex(
-        (_column: Column) => _column.id === finish.id
+        (_column: BoardColumn) => _column.id === destinationColumn.id
       );
       // insert column in proper place
       newColumns.splice(finishColumnIndex, 1);
-      newColumns.splice(finishColumnIndex, 0, newFinishColumn);
+      newColumns.splice(finishColumnIndex, 0, newDestinationColumn);
 
       setColumns(newColumns);
       updateTodo(todoToUpdate);
@@ -175,7 +172,7 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
             <Spinner color={__COLORS.SECONDARY}></Spinner>
           ) : (
             <>
-              {columns.map((column: Column, index: number) => (
+              {columns.map((column: BoardColumn, index: number) => (
                 <ErrorBoundary key={index}>
                   <TodosList
                     header={column.header}

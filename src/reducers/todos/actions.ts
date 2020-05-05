@@ -33,10 +33,6 @@ export const fetchTodos = (uid: string): any => {
       FetchTodosSuccess | FetchTodosFailure | FetchTodosRequest
     >
   ) => {
-    // dispatch({
-    //   type: ActionTypes.FETCH_TODOS_REQUEST,
-    // });
-
     try {
       const response = await fetch(
         `${api.todos.list}${getUidQueryParam(uid)}`,
@@ -112,10 +108,6 @@ export const updateTodo = (todo: Todo): any => {
       UpdateTodoRequest | UpdateTodoSuccess | UpdateTodoFailure
     >
   ) => {
-    // dispatch({
-    //   type: ActionTypes.UPDATE_TODO_REQUEST,
-    // });
-
     try {
       const response = await fetch(
         `${api.todos.list}/${todo._id}`,

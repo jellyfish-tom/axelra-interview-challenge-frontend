@@ -39,9 +39,10 @@ const ItemsContainer = styled.div`
   height: calc(100% - 1em);
   overflow-y: scroll;
   margin-right: -2em;
-  padding-right: 1.1em;
+  padding-right: 1em;
   border-radius: 0.3em;
-  margin-left: -1em;
+  margin-left: -0.8em;
+  max-width: calc(100% + 2.5em);
 
   background-color: ${(props: any) =>
     props.isDraggingOver ? lighten(0.3, __COLORS.PRIMARY) : __COLORS.PRIMARY};
