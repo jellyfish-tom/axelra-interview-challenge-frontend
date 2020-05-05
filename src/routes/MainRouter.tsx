@@ -10,6 +10,7 @@ import { Challenge } from "../pages/challenge/Challenge";
 import { LoginPage } from "../pages/login/Login";
 import { Notification } from "../components/Notification";
 import { PrivateRoute } from "../components/PrivateRoute";
+import { ErrorBoundary } from "../components/ErrorBoundary";
 
 import { routes } from "./Routes";
 
@@ -23,34 +24,36 @@ const Container = styled.div`
 
 const MainRouter = () => {
   return (
-    <Container>
-      <Notification></Notification>
-      <Router>
-        <Switch>
-          <Route
-            path={routes.login}
-            render={(props) => {
-              return localStorage.getItem("user") ? (
-                <Redirect
-                  to={{ pathname: "/", state: { from: props.location } }}
-                />
-              ) : (
-                <LoginPage />
-              );
-            }}
-            exact
-          />
-          <PrivateRoute path="/" component={Challenge} exact />
-          <Route
-            exact
-            path={"/*"}
-            render={() => {
-              return <Redirect to={"/"} />;
-            }}
-          />
-        </Switch>
-      </Router>
-    </Container>
+    <ErrorBoundary>
+      <Container>
+        <Notification></Notification>
+        <Router>
+          <Switch>
+            <Route
+              path={routes.login}
+              render={(props) => {
+                return localStorage.getItem("user") ? (
+                  <Redirect
+                    to={{ pathname: "/", state: { from: props.location } }}
+                  />
+                ) : (
+                  <LoginPage />
+                );
+              }}
+              exact
+            />
+            <PrivateRoute path="/" component={Challenge} exact />
+            <Route
+              exact
+              path={"/*"}
+              render={() => {
+                return <Redirect to={"/"} />;
+              }}
+            />
+          </Switch>
+        </Router>
+      </Container>
+    </ErrorBoundary>
   );
 };
 
