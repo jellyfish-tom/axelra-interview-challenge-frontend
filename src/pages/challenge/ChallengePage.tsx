@@ -10,7 +10,7 @@ import { TopBar } from "../../components/TopBar";
 
 const Container = styled.div``;
 
-export const Challenge = () => {
+export const ChallengePage = () => {
   const { auth }: { auth: AuthState } = useSelector(
     (state: RootState) => state
   );

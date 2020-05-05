@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../../layout/UI/Components/Button";
+import { DropdownItem } from "../../../model/Dropdown";
 
 const StyledLi = styled.li`
   float: left;
@@ -40,11 +41,6 @@ const Item = styled.a`
     background-color: #e6e6e6;
   }
 `;
-
-export interface DropdownItem {
-  value: number;
-  label: string;
-}
 
 export const TodoStatesDropdown = (props: {
   onClick: (state: DropdownItem) => void;

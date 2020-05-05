@@ -6,8 +6,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { Challenge } from "../pages/challenge/Challenge";
-import { LoginPage } from "../pages/login/Login";
+import { ChallengePage } from "../pages/challenge/ChallengePage";
+import { LoginPage } from "../pages/login/LoginPage";
 import { Notification } from "../components/Notification";
 import { PrivateRoute } from "../components/PrivateRoute";
 import { ErrorBoundary } from "../components/ErrorBoundary";
@@ -42,7 +42,7 @@ const MainRouter = () => {
               }}
               exact
             />
-            <PrivateRoute path="/" component={Challenge} exact />
+            <PrivateRoute path="/" component={ChallengePage} exact />
             <Route
               exact
               path={"/*"}

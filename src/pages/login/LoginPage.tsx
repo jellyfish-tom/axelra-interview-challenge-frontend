@@ -53,7 +53,10 @@ const useCleanUserState = () => {
   }, [dispatch]);
 };
 
-const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
+export const UnconnectedLoginPage = (props: {
+  login: Login;
+  register: Register;
+}) => {
   const { auth }: { auth: AuthState } = useSelector(
     (state: RootState) => state
   );
