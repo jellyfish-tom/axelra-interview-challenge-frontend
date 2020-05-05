@@ -19,6 +19,13 @@ import { BoardColumn } from "../../../model/BoardColumn";
 import { Todo } from "../../../model/Todo";
 import { POSSIBLE_TODO_DROPDOWN_STATES } from "../../../model/Dropdown";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
+import {
+  overwriteColumn,
+  getTodoById,
+  getColumnWithRemovedTodo,
+  getColumnWithInsertedTodo,
+  getColumnWithMovedTodo,
+} from "../../../helpers/dragAndDrop";
 
 const Container = styled.div`
   padding: 1em;
@@ -82,79 +89,38 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
     const droppedInSameColumn = sourceColumn.id === destinationColumn.id;
 
     if (droppedInSameColumn) {
-      const newTodos = [...sourceColumn.todos];
-
-      // insert todo in new place in same column
-      newTodos.splice(source.index, 1);
-      newTodos.splice(
-        destination.index,
-        0,
-        sourceColumn.todos.find(
-          (todo: Todo) => todo._id === draggableId
-        ) as Todo
+      setColumns(
+        overwriteColumn(
+          [...columns],
+          getColumnWithMovedTodo(
+            sourceColumn,
+            getTodoById(sourceColumn, draggableId),
+            source.index,
+            destination.index
+          )
+        )
       );
-
-      // create new column
-      const newColumn = {
-        ...sourceColumn,
-        todos: newTodos,
-      };
-
-      // clone current columns so data is not mutated
-      const newColumns = [...columns];
-      // find index of column to be removed
-      const columnToRemoveIndex = columns.findIndex(
-        (_column: BoardColumn) => _column.id === sourceColumn.id
-      );
-      // insert column in proper place
-      newColumns.splice(columnToRemoveIndex, 1);
-      newColumns.splice(columnToRemoveIndex, 0, newColumn);
-
-      setColumns(newColumns);
       return;
     } else {
-      //moving from one list to another
-      const newStartColumnTodos = [...sourceColumn.todos];
-      const todoToUpdate = sourceColumn.todos.find(
-        (todo: Todo) => todo._id === draggableId
-      ) as Todo;
+      const todoToUpdate = getTodoById(sourceColumn, draggableId);
 
       todoToUpdate.completed = !todoToUpdate.completed;
 
-      // insert todo in new place in same column
-      newStartColumnTodos.splice(source.index, 1);
-
-      const newStartColumn = {
-        ...sourceColumn,
-        todos: newStartColumnTodos,
-      };
-
-      const newFinishColumnTodos = [...destinationColumn.todos];
-      newFinishColumnTodos.splice(destination.index, 0, todoToUpdate);
-
-      const newDestinationColumn = {
-        ...destinationColumn,
-        todos: newFinishColumnTodos,
-      };
-
-      // insert column in proper place
-      const newColumns = [...columns];
-      // find index of column to be removed
-      const startColumnToIndex = columns.findIndex(
-        (_column: BoardColumn) => _column.id === sourceColumn.id
+      const columnsWithUpdatedSourceColumn = overwriteColumn(
+        [...columns],
+        getColumnWithRemovedTodo(sourceColumn, source.index)
       );
-      // insert column in proper place
-      newColumns.splice(startColumnToIndex, 1);
-      newColumns.splice(startColumnToIndex, 0, newStartColumn);
 
-      const finishColumnIndex = columns.findIndex(
-        (_column: BoardColumn) => _column.id === destinationColumn.id
+      const updatedColumns = overwriteColumn(
+        columnsWithUpdatedSourceColumn,
+        getColumnWithInsertedTodo(
+          destinationColumn,
+          todoToUpdate,
+          destination.index
+        )
       );
-      // insert column in proper place
-      newColumns.splice(finishColumnIndex, 1);
-      newColumns.splice(finishColumnIndex, 0, newDestinationColumn);
 
-      setColumns(newColumns);
+      setColumns(updatedColumns);
       updateTodo(todoToUpdate);
 
       return;
