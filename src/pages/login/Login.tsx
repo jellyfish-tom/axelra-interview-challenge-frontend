@@ -9,6 +9,7 @@ import { AuthState } from "../../reducers/auth/types";
 import { Spinner } from "../../layout/UI/Spinners/Spinner";
 import { __COLORS } from "../../layout/Theme";
 import { BounceIn } from "../../layout/UI/Animations/BounceIn";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 
 const Title = styled.h1`
   font-size: 2em;
@@ -82,42 +83,44 @@ const UnconnectedLoginPage = (props: { login: Login; register: Register }) => {
   };
 
   return (
-    <Container>
-      <Title>Axelera Challenge Login</Title>
-      {auth.loading && email && password ? (
-        <Spinner color={__COLORS.SECONDARY}></Spinner>
-      ) : (
-        <>
-          <LoginInput
-            placeholder="email"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
-            onKeyPress={keyPressed}
-          ></LoginInput>
-          <LoginInput
-            placeholder="password"
-            type="password"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-            onKeyPress={keyPressed}
-          ></LoginInput>
-          <LoginButton onClick={registrationEnabled ? onRegister : onLogin}>
-            {registrationEnabled ? "Register" : "Login"}
-          </LoginButton>
-          {registrationEnabled ? (
-            <CallToAction unselectable="on" onClick={onToggleRegistration}>
-              Go back to Login
-            </CallToAction>
-          ) : (
-            <CallToAction unselectable="on" onClick={onToggleRegistration}>
-              Not registered yet?
-            </CallToAction>
-          )}
-        </>
-      )}
-    </Container>
+    <ErrorBoundary>
+      <Container>
+        <Title>Axelera Challenge Login</Title>
+        {auth.loading && email && password ? (
+          <Spinner color={__COLORS.SECONDARY}></Spinner>
+        ) : (
+          <>
+            <LoginInput
+              placeholder="email"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
+              onKeyPress={keyPressed}
+            ></LoginInput>
+            <LoginInput
+              placeholder="password"
+              type="password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+              onKeyPress={keyPressed}
+            ></LoginInput>
+            <LoginButton onClick={registrationEnabled ? onRegister : onLogin}>
+              {registrationEnabled ? "Register" : "Login"}
+            </LoginButton>
+            {registrationEnabled ? (
+              <CallToAction unselectable="on" onClick={onToggleRegistration}>
+                Go back to Login
+              </CallToAction>
+            ) : (
+              <CallToAction unselectable="on" onClick={onToggleRegistration}>
+                Not registered yet?
+              </CallToAction>
+            )}
+          </>
+        )}
+      </Container>
+    </ErrorBoundary>
   );
 };
 

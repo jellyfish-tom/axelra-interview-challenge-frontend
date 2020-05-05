@@ -17,6 +17,7 @@ import { __COLORS } from "../../../layout/Theme";
 import { Todo } from "../../../model/Todo";
 import { POSSIBLE_TODO_DROPDOWN_STATES } from "../../../model/Dropdown";
 import { DragDropContext } from "react-beautiful-dnd";
+import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
 export interface Column {
   id: number;
@@ -56,7 +57,6 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
   }, [fetchTodos, auth.user._id]);
 
   useEffect(() => {
-    console.log("EFFECT!!!");
     setColumns(
       POSSIBLE_TODO_DROPDOWN_STATES.map((state, index) => ({
         id: index,
@@ -166,7 +166,9 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
 
   return (
     <Container>
-      <TodosControls></TodosControls>
+      <ErrorBoundary>
+        <TodosControls></TodosControls>
+      </ErrorBoundary>
       <DragDropContext key={"context"} onDragEnd={onDragEnd}>
         <ListsContainer>
           {todos.loading && todos.todos.length === 0 ? (
@@ -174,12 +176,14 @@ const Board = (props: { fetchTodos: FetchTodos; updateTodo: UpdateTodo }) => {
           ) : (
             <>
               {columns.map((column: Column, index: number) => (
-                <TodosList
-                  key={index}
-                  header={column.header}
-                  todos={column.todos}
-                  id={String(index)}
-                ></TodosList>
+                <ErrorBoundary>
+                  <TodosList
+                    key={index}
+                    header={column.header}
+                    todos={column.todos}
+                    id={String(index)}
+                  ></TodosList>
+                </ErrorBoundary>
               ))}
             </>
           )}
