@@ -8,9 +8,10 @@ import {
 import {
   POSSIBLE_TODO_DROPDOWN_STATES,
   NEUTRAL_TODO_DROPDOWN_STATE,
+  DropdownItem,
 } from "../../../model/Dropdown";
 import { connect, useSelector } from "react-redux";
-import { TodoStatesDropdown, DropdownItem } from "./TodoStatesDropdown";
+import { TodoStatesDropdown } from "./TodoStatesDropdown";
 import { RootState } from "../../../reducers/store";
 import { AuthState } from "../../../reducers/auth/types";
 import { Button, Input } from "../../../layout/UI/Components";
